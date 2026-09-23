@@ -1,0 +1,2098 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#176b5c" />
+  <meta name="color-scheme" content="light dark" />
+  <title>مساري | اكتشف اهتماماتك، واختر مستقبلك</title>
+  <meta name="description" content="مساري: اختبار تفاعلي استرشادي يساعدك على اكتشاف اهتماماتك والتعرّف على مجالات وتخصصات مناسبة لك." />
+  <meta property="og:title" content="مساري | اكتشف اهتماماتك، واختر مستقبلك" />
+  <meta property="og:description" content="اختبار تفاعلي استرشادي يساعدك على اكتشاف اهتماماتك والتعرّف على مجالات وتخصصات مناسبة." />
+  <meta property="og:type" content="website" />
+  <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22%D9%85%D8%B3%D8%A7%D8%B1%D9%8A%22,%22short_name%22:%22%D9%85%D8%B3%D8%A7%D8%B1%D9%8A%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23fbfcfa%22,%22theme_color%22:%22%23176b5c%22,%22lang%22:%22ar%22}" />
+  <style>
+:root{
+  --bg:#fbfcfa;
+  --paper:#ffffff;
+  --text:#123f3b;
+  --muted:#5a716c;
+  --primary:#176b5c;
+  --primary2:#2f9e7b;
+  --line:#dce7e3;
+  --soft:#eef7f3;
+  --shadow:0 18px 45px rgba(18,63,59,.11);
+  --radius:22px;
+  --opt-selected-bg:#e8f7f1;
+  --toast-bg:#173e39;
+  --danger:#b45309;
+}
+html.dark{
+  --bg:#0f1f1c;
+  --paper:#152824;
+  --text:#e4f0ec;
+  --muted:#9bb0aa;
+  --primary:#3dba96;
+  --primary2:#2f9e7b;
+  --line:#243d37;
+  --soft:#1a322c;
+  --shadow:0 18px 45px rgba(0,0,0,.35);
+  --opt-selected-bg:#1e3d34;
+  --toast-bg:#0a1815;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(380px 300px at 0% 8%, rgba(23,107,92,.07), transparent 70%),
+    radial-gradient(380px 300px at 100% 15%, rgba(47,158,123,.06), transparent 72%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg) 100%);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .25s ease,color .25s ease;
+}
+html.dark body{
+  background:
+    radial-gradient(380px 300px at 0% 8%, rgba(47,158,123,.08), transparent 70%),
+    radial-gradient(380px 300px at 100% 15%, rgba(23,107,92,.06), transparent 72%),
+    linear-gradient(180deg,#0f1f1c 0%,#0c1a17 100%);
+}
+body:before, body:after{
+  content:"";position:fixed;pointer-events:none;z-index:0;
+}
+body:before{
+  width:190px;height:190px;left:-90px;top:105px;border:28px solid rgba(23,107,92,.07);
+  border-radius:50%;
+  box-shadow:0 0 0 30px rgba(23,107,92,.035), 0 0 0 65px rgba(23,107,92,.018);
+}
+body:after{
+  width:130px;height:130px;right:-75px;bottom:210px;
+  border:1px solid rgba(23,107,92,.18);border-radius:50%;
+  box-shadow:0 0 0 18px rgba(23,107,92,.025);
+}
+html.dark body:before{border-color:rgba(47,158,123,.12)}
+html.dark body:after{border-color:rgba(47,158,123,.2)}
+
+.page{position:relative;z-index:1;min-height:100vh;width:100%;margin:0 auto;overflow:visible}
+.wrap{width:min(980px,calc(100% - 28px));margin:0 auto;padding-bottom:24px}
+
+/* Nav */
+.nav{
+  width:100%;height:72px;padding:0 clamp(14px,3vw,42px);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 12px rgba(18,63,59,.04);
+  position:relative;z-index:3;
+  transition:background .25s ease;
+}
+html.dark .nav{background:rgba(21,40,36,.94)}
+.nav-left{grid-column:1;justify-self:start;display:flex;align-items:center;gap:10px;min-width:0}
+.nav-center{grid-column:2;display:flex;align-items:center;justify-content:center;gap:18px;min-width:0}
+.nav-right{grid-column:3;justify-self:end;display:flex;align-items:center;gap:12px;min-width:0}
+.nav-group{display:flex;align-items:center;gap:22px}
+.nav-link{
+  color:var(--text);text-decoration:none;font-size:14px;font-weight:700;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.nav-link.active{position:relative}
+.nav-link.active:after{
+  content:"";position:absolute;left:0;right:0;bottom:-23px;height:3px;border-radius:3px;background:var(--primary2);
+}
+.nav-contact-plain{
+  padding:0!important;background:transparent!important;box-shadow:none!important;border:0!important;
+  color:var(--text)!important;text-decoration:none;font-size:14px;font-weight:800;white-space:nowrap;
+}
+.nav-contact-plain:hover{color:var(--primary2)!important}
+.nav-union-logo{width:190px;height:52px;object-fit:contain;display:block}
+.nav-divider{width:1px;height:38px;background:var(--line);flex:none}
+.brand{display:flex;align-items:center;text-decoration:none;min-width:0}
+.brand-logo{width:126px;height:52px;object-fit:contain;image-rendering:auto}
+
+.theme-btn{
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--line);
+  background:var(--soft);color:var(--primary);cursor:pointer;
+  display:grid;place-items:center;font-size:18px;flex:none;
+  transition:transform .15s ease,background .15s ease,border-color .15s ease,box-shadow .15s ease;
+  box-shadow:0 2px 8px rgba(18,63,59,.06);
+}
+.theme-btn:hover{
+  transform:translateY(-1px);background:var(--paper);border-color:#a9cec1;
+  box-shadow:0 5px 14px rgba(18,63,59,.10);
+}
+.theme-btn:active{transform:scale(.96)}
+.theme-btn:focus-visible{outline:3px solid rgba(47,158,123,.32);outline-offset:2px}
+html.dark .theme-btn{background:var(--soft);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+
+/* Hero */
+.hero{text-align:center;padding:38px 0 18px;position:relative}
+.hero h1{
+  margin:4px 0 0;font-size:68px;line-height:.95;letter-spacing:-2px;
+  font-weight:900;color:#075b50;
+}
+html.dark .hero h1{color:var(--primary)}
+.hero h1:after{
+  content:"";display:block;width:160px;height:8px;margin:8px auto 0;
+  border-radius:50% 50% 55% 55%;
+  background:var(--primary2);transform:rotate(-2deg);
+}
+.hero h2{margin:28px 0 10px;font-size:24px;line-height:1.45;font-weight:900;color:var(--text)}
+.hero p{margin:0 auto;color:var(--muted);font-size:16px;line-height:1.8;max-width:620px}
+.decor-cap,.decor-citadel{
+  position:absolute;pointer-events:none;opacity:.11;color:#73918b;
+}
+.decor-cap{left:-5px;top:130px;width:190px}
+.decor-citadel{right:-20px;top:145px;width:210px;opacity:.13}
+html.dark .decor-cap,html.dark .decor-citadel{opacity:.08}
+
+/* Cards */
+.quiz-card{
+  width:min(650px,100%);margin:12px auto 0;background:rgba(255,255,255,.97);
+  border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:25px 26px 27px;
+  transition:background .25s ease,border-color .25s ease;
+}
+html.dark .quiz-card{background:rgba(21,40,36,.97)}
+.intro-screen{padding:8px 2px 4px;text-align:center}
+.intro-icon{
+  width:86px;height:86px;margin:2px auto 16px;border-radius:27px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#f3fbf8,#e6f5ef);border:1px solid #cfe8df;
+  box-shadow:0 12px 24px rgba(23,107,92,.12), inset 0 1px 0 rgba(255,255,255,.9);
+  position:relative;overflow:hidden;
+}
+html.dark .intro-icon{background:linear-gradient(145deg,#1a322c,#152824);border-color:#2a4a42}
+.intro-icon:before{content:"";position:absolute;width:58px;height:16px;border-radius:50%;background:rgba(23,107,92,.10);bottom:5px;filter:blur(5px)}
+.compass-sticker svg{width:72px;height:72px;position:relative;z-index:1;filter:drop-shadow(0 5px 7px rgba(23,107,92,.16))}
+.intro-screen h3{margin:0 0 10px;color:var(--primary);font-size:24px;font-weight:900}
+.intro-screen p{margin:0 auto;color:var(--muted);font-size:15px;line-height:1.9;max-width:520px}
+.intro-list{display:grid;gap:8px;margin:18px auto 20px;max-width:520px;text-align:right}
+.intro-item{
+  display:flex;gap:9px;align-items:flex-start;background:var(--soft);
+  border:1px solid var(--line);border-radius:13px;padding:11px 12px;color:var(--text);
+  font-size:14px;line-height:1.65;
+}
+.intro-item b{color:var(--primary2)}
+.start-btn{width:100%;max-width:360px;margin:0 auto;border-radius:14px}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.section-title h3{margin:0;color:var(--primary);font-size:23px;font-weight:900;display:flex;align-items:center;gap:8px}
+.qCounter{color:var(--muted);font-size:14px;font-weight:700}
+.progress{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin-bottom:20px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#2fa878,#248d6e);transition:width .3s ease;border-radius:999px}
+.saved-hint{
+  font-size:12px;color:var(--primary2);font-weight:700;margin:-12px 0 16px;opacity:0;
+  transition:opacity .3s ease;text-align:center;
+}
+.saved-hint.show{opacity:1}
+
+.q{display:none}.q.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.q h4{margin:0 0 17px;font-size:20px;line-height:1.6;font-weight:900;color:var(--text)}
+.options{display:grid;grid-template-columns:1fr;gap:10px}
+.opt{
+  min-height:56px;border:1px solid var(--line);background:var(--paper);border-radius:13px;
+  padding:15px 17px;cursor:pointer;transition:.18s ease;user-select:none;
+  font-size:15px;font-weight:700;line-height:1.45;color:var(--text);
+  display:flex;align-items:center;font-family:inherit;text-align:right;width:100%;
+  position:relative;
+}
+.opt:before{
+  content:"";width:22px;height:22px;border:2px solid #9db2ad;border-radius:50%;
+  margin-left:12px;flex:0 0 auto;transition:.18s ease;
+}
+.opt:hover{border-color:#89bfae;box-shadow:0 5px 14px rgba(18,61,58,.06);transform:translateY(-1px)}
+.opt.selected{
+  border-color:#38a17d;background:var(--opt-selected-bg);
+  box-shadow:inset 0 0 0 1px rgba(45,155,120,.12), 0 4px 12px rgba(23,107,92,.08);
+}
+.opt.selected:before{
+  border-color:#258e6e;background:#2c9a77;
+  box-shadow:inset 0 0 0 4px #fff;
+  content:"✓";color:#fff;font-size:13px;font-weight:900;
+  display:grid;place-items:center;line-height:1;
+}
+html.dark .opt.selected:before{box-shadow:inset 0 0 0 4px #152824}
+.opt:focus-visible{outline:3px solid rgba(47,158,123,.32);outline-offset:2px}
+
+.actions{display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:nowrap}
+.btn{
+  appearance:none;border:1px solid var(--line);cursor:pointer;min-height:48px;padding:12px 16px;
+  border-radius:13px;font-weight:900;font-size:15px;line-height:1.2;color:var(--primary);
+  background:var(--soft);transition:transform .16s ease,box-shadow .16s ease,background .18s ease,border-color .18s ease;
+  flex:1 1 0;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  box-sizing:border-box;min-width:0;
+}
+.btn:hover:not(:disabled){transform:translateY(-2px);border-color:#a9cec1;box-shadow:0 7px 16px rgba(18,63,59,.10)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.985)}
+.btn.primary{
+  background:linear-gradient(135deg,#2d9b78,#176b5c);border-color:transparent;color:#fff;
+  box-shadow:0 8px 18px rgba(23,107,92,.18);
+}
+.btn.primary:hover:not(:disabled){background:linear-gradient(135deg,#33a982,#176b5c);box-shadow:0 10px 20px rgba(23,107,92,.22)}
+.btn.ghost{background:transparent;border-style:dashed;color:var(--muted);flex:0 0 auto;min-width:88px;padding-left:12px;padding-right:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn:focus-visible{outline:3px solid rgba(47,158,123,.32);outline-offset:2px}
+
+/* Result */
+.result{display:none;padding:2px 0 0}.result.active{display:block;animation:fadeIn .3s ease}
+.resultBox{border:1px solid var(--line);background:var(--soft);border-radius:17px;padding:16px}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;
+  border:1px solid #bfe0d5;background:#edf8f4;color:var(--primary);font-weight:800;
+}
+html.dark .pill{background:#1e3d34;border-color:#2a5a4a}
+.confidence{
+  margin:14px 0 0;padding:10px 12px;border-radius:12px;font-size:12.5px;font-weight:700;line-height:1.65;
+  background:#f0faf6;border:1px solid #cce5dc;color:#28665a;
+}
+html.dark .confidence{background:#1a322c;border-color:#2a4a42;color:#8fd4b8}
+.study-tip{
+  margin-top:14px;padding:12px 14px;border-radius:14px;
+  background:linear-gradient(135deg,#eef8f4,#f7fcfa);border:1px solid #cfe8df;
+}
+html.dark .study-tip{background:linear-gradient(135deg,#1a322c,#152824);border-color:#2a4a42}
+.study-tip-title{font-size:13px;font-weight:900;color:var(--primary);margin-bottom:6px}
+.study-tip p{margin:0;font-size:13px;line-height:1.8;color:var(--muted)}
+.type{color:var(--muted);margin-bottom:8px}
+.majors{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.major{
+  border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:10px 12px;
+  min-height:52px;display:flex;align-items:center;cursor:pointer;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+  font-family:inherit;text-align:right;width:100%;color:inherit;
+}
+.major:hover{transform:translateY(-2px);border-color:#9bcdbd;box-shadow:0 7px 18px rgba(23,107,92,.08)}
+.major:active{transform:scale(.985)}
+.major-name{font-weight:800}
+.major-meta{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+.major-tag{
+  display:inline-block;margin-top:4px;padding:2px 7px;border-radius:6px;font-size:10px;
+  font-weight:800;background:var(--soft);color:var(--primary);border:1px solid var(--line);
+}
+.advice{line-height:1.8;color:var(--muted);margin-top:12px}
+.kind-note{
+  margin-top:10px;padding:10px 12px;border-radius:12px;background:#fffaf0;border:1px solid #eee1bd;
+  color:#76633b;font-size:12px;line-height:1.7;
+}
+html.dark .kind-note{background:#2a2418;border-color:#4a4030;color:#d4c49a}
+.edu-note{
+  margin-top:10px;padding:14px 14px 12px;border-radius:14px;
+  background:#f4f8f6;border:1px solid var(--line);
+  color:var(--muted);font-size:12px;line-height:1.7;
+}
+.edu-note-title{font-weight:900;color:var(--primary);font-size:13px;margin-bottom:10px}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.edu-item{
+  background:var(--paper);border:1px solid var(--line);border-radius:11px;
+  padding:9px 11px;display:flex;flex-direction:column;gap:3px;
+}
+.edu-item b{color:var(--text);font-weight:900;font-size:12.5px}
+.edu-item span{color:var(--muted);font-size:11.5px;line-height:1.65}
+html.dark .edu-note{background:var(--soft)}
+
+.edu-item:last-child:nth-child(odd){grid-column:1 / -1}
+@media(max-width:520px){.edu-grid{grid-template-columns:1fr}}
+.scores-title{margin-top:18px;margin-bottom:8px;font-size:13px;font-weight:900;color:var(--primary)}
+.scores-help{margin:0 0 10px;color:var(--muted);font-size:11.5px;line-height:1.7}
+.scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+.score-row{
+  border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:9px 10px;
+  min-width:0;min-height:64px;height:64px;display:flex;flex-direction:column;justify-content:center;
+}
+.score-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;font-weight:800;min-width:0}
+.score-name{color:var(--text);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score-pct{color:var(--primary);font-weight:900;min-width:38px;text-align:left;font-variant-numeric:tabular-nums}
+.score-track{height:6px;flex:0 0 6px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:7px}
+.score-fill{height:100%;width:0;background:linear-gradient(90deg,#2f9e7b,#176b5c);border-radius:999px;transition:width 1s cubic-bezier(.22,.8,.28,1)}
+.result-note{
+  margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--soft);
+  border:1px solid var(--line);color:var(--muted);font-size:11.5px;line-height:1.7;
+}
+
+/* Modal - bottom sheet on mobile */
+.major-modal{
+  position:fixed;inset:0;z-index:1000;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(15,39,36,.45);backdrop-filter:blur(4px);padding:12px;
+}
+.major-modal.active{display:flex!important}
+.major-modal-card{
+  width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--paper);
+  border:1px solid var(--line);border-radius:22px 22px 16px 16px;padding:18px;
+  box-shadow:0 20px 50px rgba(15,39,36,.2);animation:modalUp .22s ease;
+}
+@keyframes modalUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.major-modal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.major-modal-title{font-size:20px;font-weight:900;color:var(--text);line-height:1.4}
+.major-close{
+  width:36px;height:36px;border:1px solid var(--line);background:var(--soft);border-radius:50%;
+  font-size:22px;color:var(--muted);cursor:pointer;flex:none;
+}
+.major-modal-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.major-info{margin-top:15px}
+.major-info h5{margin:0 0 7px;color:var(--primary);font-size:13px}
+.major-info p{margin:0;color:var(--muted);font-size:13px;line-height:1.85}
+.major-jobs{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.major-job{
+  padding:7px 10px;border-radius:999px;background:var(--soft);border:1px solid var(--line);
+  color:var(--primary);font-size:11.5px;font-weight:800;
+}
+.major-duration{
+  display:inline-flex;margin-top:8px;padding:8px 11px;border-radius:10px;
+  background:var(--soft);border:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:800;
+}
+.major-modal-note{
+  margin-top:13px;padding:9px 11px;border-radius:11px;background:#fffaf0;border:1px solid #eee1bd;
+  color:#76633b;font-size:11px;line-height:1.7;
+}
+html.dark .major-modal-note{background:#2a2418;border-color:#4a4030;color:#d4c49a}
+
+/* About & footer */
+.about-card{
+  width:min(650px,100%);margin:24px auto 0;
+  background:linear-gradient(135deg,#effaf6,#f8fcfa);border:1px solid #d7ebe4;
+  border-radius:24px;padding:20px 18px;box-shadow:0 12px 30px rgba(18,63,59,.06);
+}
+html.dark .about-card{background:linear-gradient(135deg,#152824,#1a322c);border-color:#2a4a42}
+.about-card h3{margin:0 0 8px;color:var(--primary);font-size:21px;font-weight:900}
+.about-card p{margin:0;color:var(--muted);line-height:1.85;font-size:14px}
+.union-about{
+  width:min(650px,100%);margin:18px auto 0;display:block;padding:18px 20px;
+  border:1px solid var(--line);border-radius:18px;background:var(--paper);
+  box-shadow:0 10px 24px rgba(18,63,59,.05);text-align:right;
+}
+.union-about h3{margin:0 0 6px;color:var(--primary);font-size:18px;font-weight:900}
+.union-about p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.8}
+
+/* Contact form */
+.contact-card{
+  width:min(650px,100%);margin:24px auto 0;
+  background:rgba(255,255,255,.97);border:1px solid var(--line);
+  border-radius:24px;padding:22px 20px 24px;box-shadow:var(--shadow);
+  transition:background .25s ease,border-color .25s ease;
+}
+html.dark .contact-card{background:rgba(21,40,36,.97)}
+.contact-card h3{margin:0 0 8px;color:var(--primary);font-size:21px;font-weight:900}
+.contact-card > p{margin:0 0 18px;color:var(--muted);line-height:1.85;font-size:14px}
+.contact-form{display:grid;gap:14px}
+.form-field{display:flex;flex-direction:column;gap:6px;text-align:right}
+.form-field label{font-size:13px;font-weight:800;color:var(--text)}
+.form-field label span{color:var(--danger);font-weight:900}
+.form-field input{
+  min-height:48px;border:1px solid var(--line);background:var(--paper);
+  border-radius:13px;padding:12px 14px;font-size:15px;font-weight:600;
+  color:var(--text);font-family:inherit;width:100%;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.form-field input:focus{
+  outline:none;border-color:#38a17d;
+  box-shadow:0 0 0 3px rgba(47,158,123,.18);
+}
+.form-field input::placeholder{color:var(--muted);opacity:.75;font-weight:500}
+.form-field .field-hint{font-size:11.5px;color:var(--muted);line-height:1.5}
+.contact-submit{width:100%;max-width:360px;margin:4px auto 0;border-radius:14px}
+.contact-success{
+  display:none;margin-top:14px;padding:14px 16px;border-radius:14px;
+  background:#eef8f4;border:1px solid #cfe8df;color:#28665a;
+  font-size:14px;font-weight:700;line-height:1.7;text-align:center;
+}
+html.dark .contact-success{background:#1a322c;border-color:#2a4a42;color:#8fd4b8}
+.contact-success.show{display:block;animation:fadeIn .25s ease}
+.contact-entries{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+  display:none;
+}
+.contact-entries.show{display:block}
+.contact-entries h4{margin:0 0 10px;font-size:14px;font-weight:900;color:var(--primary)}
+.entry-list{display:grid;gap:8px;max-height:220px;overflow:auto}
+.entry-item{
+  background:var(--soft);border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;font-size:13px;line-height:1.6;color:var(--text);
+  display:flex;flex-direction:column;gap:2px;
+}
+.entry-item b{color:var(--primary2)}
+.entry-meta{font-size:11px;color:var(--muted)}
+.contact-admin-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.contact-admin-actions .btn{flex:1 1 auto;min-width:120px;font-size:13px;min-height:42px}
+.dev-credit{
+  grid-column:1/-1;margin-top:1px;padding-top:1px;text-align:center;line-height:1.4;
+}
+.dev-credit a{
+  color:var(--muted);font-size:12px;font-weight:700;text-decoration:none;
+  transition:color .15s ease;
+}
+.dev-credit a:hover{color:var(--primary2);text-decoration:underline}
+
+.site-footer{
+  width:100%;margin-top:42px;padding:22px clamp(18px,4vw,60px) 12px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:16px;text-align:center;
+  color:var(--muted);border-top:1px solid var(--line);
+}
+.footer-social{grid-column:1;grid-row:1;justify-self:start;align-items:flex-start;text-align:left}
+.footer-counter{grid-column:2;grid-row:1;justify-self:center}
+.footer-slogan{grid-column:3;grid-row:1;justify-self:end;align-items:flex-end;text-align:right}
+.footer-block{min-height:82px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}
+.social-links{display:flex;align-items:center;gap:8px}
+.social-link{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:var(--soft);border:1px solid var(--line);color:var(--text);text-decoration:none;
+  transition:transform .15s ease,background .15s ease;
+}
+.social-link:hover{transform:translateY(-2px)}
+.social-link svg{width:18px;height:18px}
+.slogan{font-weight:900;color:#16805f;line-height:1.6;text-align:right}
+html.dark .slogan{color:var(--primary)}
+.slogan:after{content:"";display:block;width:68px;height:4px;border-radius:50%;background:#2d9b78;margin:8px 0 0 auto;transform:rotate(-3deg)}
+.counter{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:72px;
+  padding:8px 14px;border-radius:12px;
+  background:rgba(22,128,95,.10)!important;color:#176b5c!important;
+  border:1px solid rgba(45,155,120,.34);
+  box-shadow:0 5px 14px rgba(18,63,59,.08)!important;
+  font-weight:900;line-height:1;font-size:14px;
+}
+html.dark .counter{background:rgba(47,158,123,.15)!important;color:#8fd4b8!important;border-color:rgba(47,158,123,.3)}
+.counter b{font-size:17px;font-variant-numeric:tabular-nums}
+.copyright{grid-column:1/-1;padding-top:7px;font-size:12px;color:var(--muted);text-align:center}
+
+
+/* Final release polish: header + AI credit */
+.nav-union-logo{width:200px;height:54px}
+.nav-divider{display:block;width:1px;height:34px;background:var(--line);opacity:.9}
+.brand-logo{width:126px;height:54px}
+
+@media(max-width:700px){
+  .nav-union-logo{width:76px;height:36px}
+  .brand-logo{width:58px;height:36px}
+  .nav-divider{display:block;width:1px;height:27px}
+  .nav-right{gap:6px}
+}
+@media(max-width:520px){
+  .nav-union-logo{width:70px;height:34px}
+  .brand-logo{width:55px;height:34px}
+  .nav-divider{height:25px}
+  .nav-right{gap:5px}
+}
+@media(max-width:360px){
+  .nav-union-logo{width:64px;height:32px}
+  .brand-logo{width:52px;height:32px}
+  .nav-divider{height:23px}
+  .nav-right{gap:4px}
+}
+@media(max-width:700px){
+  .dev-credit a{font-size:11px}
+}
+
+.hidden{display:none!important}
+
+/* Toast */
+.toast-wrap{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2000;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;
+  width:min(420px,calc(100% - 24px));
+}
+.toast{
+  pointer-events:auto;background:var(--toast-bg);color:#fff;padding:12px 18px;border-radius:14px;
+  font-size:14px;font-weight:700;line-height:1.5;box-shadow:0 12px 32px rgba(0,0,0,.2);
+  animation:toastIn .25s ease;text-align:center;max-width:100%;
+}
+.toast.error{background:#7f1d1d}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+@media(max-width:700px){
+  .nav{height:62px;padding:0 10px;gap:6px;grid-template-columns:auto minmax(0,1fr) auto;overflow:hidden}
+  .nav-left{grid-column:1;min-width:0}.nav-center{grid-column:2;min-width:0;overflow:hidden;justify-self:center}.nav-right{grid-column:3;gap:4px;min-width:0}
+  .nav-group{gap:9px}.nav-link{font-size:11px}.nav-link .nav-label{display:none}
+  .nav-contact-plain{font-size:11px!important}
+  .nav-union-logo{width:68px;height:34px}.nav-divider{display:none}.brand-logo{width:58px;height:34px}
+  .theme-btn{width:36px;height:36px;border-radius:10px;font-size:16px}
+  .major-modal{padding:0;align-items:flex-end;overflow:hidden}
+  .major-modal-card{position:relative;width:100%;max-width:100%;max-height:min(86dvh,720px);overflow-y:auto;overflow-x:hidden;padding:16px 16px calc(18px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0}
+  .major-modal-top{padding-left:48px;min-width:0}
+  .major-modal-title,.major-modal-sub{min-width:0;overflow-wrap:anywhere}
+  .major-close{position:absolute;left:12px;top:12px;width:40px;height:40px;z-index:2;font-size:21px;display:grid;place-items:center}
+  .major-info p{overflow-wrap:anywhere}
+  .major-jobs{max-width:100%}
+  .theme-btn{width:36px;height:36px;font-size:15px;border-radius:10px}
+  .wrap{width:calc(100% - 20px)}
+  .hero{padding-top:28px}.hero h1{font-size:52px}
+  .decor-cap{left:-55px;width:150px;top:150px}.decor-citadel{right:-75px;width:190px;top:170px}
+  .quiz-card{padding:19px 16px 21px;border-radius:20px}
+  .section-title h3{font-size:20px}.q h4{font-size:17px}
+  .opt{font-size:14px;min-height:54px}
+  .majors{grid-template-columns:1fr 1fr}
+  .site-footer{grid-template-columns:1fr 1fr 1fr;gap:6px;padding:18px 12px 10px}
+  .counter{font-size:14px;padding:7px 9px;min-width:58px}.counter b{font-size:14px}
+  .slogan{font-size:10px}
+  #navActions{
+    position:sticky;bottom:0;z-index:20;margin:12px -2px 0;
+    padding:8px 2px calc(8px + env(safe-area-inset-bottom));
+    background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);box-shadow:0 -8px 20px rgba(18,63,59,.08);
+  }
+  html.dark #navActions{background:rgba(21,40,36,.94)}
+  .major-modal{padding:0;align-items:flex-end}
+  .major-modal-card{border-radius:22px 22px 0 0;max-height:85vh;width:100%}
+}
+@media(max-width:520px){
+  .nav{padding:0 8px;gap:4px}
+  .nav-union-logo{width:62px;height:32px}.brand-logo{width:54px;height:32px}.theme-btn{width:34px;height:34px}
+  .nav-group{gap:7px}.nav-link{font-size:10.5px}
+  .actions{flex-wrap:wrap}
+  .hero h1{font-size:46px}.hero h2{font-size:18px}.hero p{font-size:13px}
+  .quiz-card{padding:17px 14px 18px}
+  .opt{font-size:13px;min-height:52px}
+  .btn{min-height:46px;padding:11px 14px;font-size:14px}
+  .nav-union-logo{width:92px;height:38px}.brand-logo{width:75px;height:36px}
+}
+@media(max-width:360px){
+  .majors{grid-template-columns:1fr}.scores{grid-template-columns:1fr}
+  .nav{height:58px;padding:0 6px;gap:3px}
+  .nav-union-logo{width:56px;height:30px}.brand-logo{width:50px;height:30px}.theme-btn{width:32px;height:32px;font-size:15px}
+  .nav-group{gap:5px}.nav-link{font-size:10px}
+  .nav-contact-plain{font-size:10px!important}
+  .nav-link .nav-label{display:none}
+  .major-modal-card{max-height:88dvh;padding-left:14px;padding-right:14px}
+  .major-modal-top{padding-left:46px}
+  .major-close{left:10px;top:10px}
+}
+  
+/* Final mobile modal/nav stabilization */
+@media (max-width:700px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .page{width:100%;max-width:100%;overflow-x:clip}
+  .major-modal{position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;min-height:100dvh;padding:12px;display:none;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box}
+  .major-modal.active{display:flex!important}
+  .major-modal-card{position:relative;box-sizing:border-box;width:100%;max-width:560px;height:auto;max-height:calc(100dvh - 24px);margin:0;overflow-y:auto;overflow-x:hidden;padding:16px 16px 20px;border-radius:20px}
+  .major-modal-top{display:grid;grid-template-columns:minmax(0,1fr) 40px;align-items:start;gap:10px;padding:0!important;min-width:0}
+  .major-modal-top>div:first-child{min-width:0}
+  .major-close{position:static!important;grid-column:2;grid-row:1;width:40px!important;height:40px!important;min-width:40px;min-height:40px;margin:0;display:grid!important;place-items:center;box-sizing:border-box;flex:none;line-height:1}
+  .major-modal-title,.major-modal-sub{min-width:0;overflow-wrap:anywhere;word-break:normal}
+  .major-info,.major-modal-note{max-width:100%;box-sizing:border-box}
+  .major-info p,.major-jobs{overflow-wrap:anywhere;word-break:break-word}
+}
+@media (max-width:520px){
+  .major-modal{padding:8px}
+  .major-modal-card{max-height:calc(100dvh - 16px);padding:14px 14px 18px;border-radius:18px}
+  .major-close{width:38px!important;height:38px!important;min-width:38px;min-height:38px}
+  .nav-union-logo{width:62px;height:32px}
+  .brand-logo{width:54px;height:32px}
+}
+@media (max-width:360px){
+  .major-modal{padding:6px}
+  .major-modal-card{max-height:calc(100dvh - 12px);padding:12px 12px 16px}
+  .major-close{width:36px!important;height:36px!important;min-width:36px;min-height:36px}
+}
+
+
+/* Final top bar alignment */
+.nav{
+  min-width:0;
+}
+.nav-right{
+  align-items:center;
+  gap:10px;
+}
+.nav-divider{
+  display:block;
+  width:1px;
+  height:34px;
+  background:var(--line);
+  opacity:.95;
+}
+.nav-union-logo{
+  width:190px;
+  height:52px;
+}
+.brand-logo{
+  width:126px;
+  height:52px;
+}
+
+@media (max-width:700px){
+  .nav{
+    height:62px;
+    padding:0 10px;
+    gap:7px;
+    grid-template-columns:auto minmax(0,1fr) auto;
+  }
+  .nav-left{min-width:0;max-width:max-content}
+  .nav-center{min-width:0;overflow:hidden;justify-self:center}
+  .nav-right{
+    gap:6px;
+    min-width:0;
+    justify-self:end;
+    flex-shrink:0;
+  }
+  .nav-group{gap:9px}
+  .nav-link{font-size:11px}
+  .nav-contact-plain{font-size:11px!important}
+  .theme-btn{width:36px;height:36px;border-radius:10px;font-size:15px}
+  .nav-divider{display:block;width:1px;height:28px;flex:none}
+  .nav-union-logo{width:82px;height:38px;flex:none}
+  .brand-logo{width:64px;height:38px;flex:none}
+}
+
+@media (max-width:520px){
+  .nav{height:60px;padding:0 8px;gap:5px}
+  .nav-right{gap:5px}
+  .nav-group{gap:7px}
+  .nav-link{font-size:10.5px}
+  .nav-contact-plain{font-size:10.5px!important}
+  .theme-btn{width:34px;height:34px}
+  .nav-divider{height:26px}
+  .nav-union-logo{width:78px;height:36px}
+  .brand-logo{width:60px;height:36px}
+}
+
+@media (max-width:360px){
+  .nav{height:58px;padding:0 6px;gap:4px}
+  .nav-right{gap:4px}
+  .nav-group{gap:5px}
+  .nav-link{font-size:10px}
+  .nav-contact-plain{font-size:10px!important}
+  .theme-btn{width:32px;height:32px;font-size:14px}
+  .nav-divider{height:24px}
+  .nav-union-logo{width:70px;height:33px}
+  .brand-logo{width:54px;height:33px}
+}
+
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav" aria-label="التنقل الرئيسي">
+      <div class="nav-left">
+        <a class="nav-contact nav-contact-plain" href="#footer" aria-label="تواصل معنا">تواصل معنا</a>
+      </div>
+      <div class="nav-center">
+        <div class="nav-group">
+          <a class="nav-link active" href="#top">الرئيسية</a>
+          <a class="nav-link" href="#about">عن مساري</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <button type="button" class="theme-btn" id="themeBtn" aria-label="تبديل الوضع الليلي" title="الوضع الليلي">🌙</button>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <img class="nav-union-logo" data-union-wide alt="شعار اتحاد طلبة سوريا">
+        <span class="nav-divider" aria-hidden="true"></span>
+        <a class="brand" href="#top" aria-label="مساري - الصفحة الرئيسية">
+          <img class="brand-logo" data-embedded-logo alt="شعار مساري">
+        </a>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <section class="hero" id="top">
+        <div class="decor-cap" aria-hidden="true">
+          <svg viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 52L112 18L203 31L107 66L18 52Z" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+            <path d="M107 66L96 120C91 137 67 142 56 127L35 98" stroke="currentColor" stroke-width="7"/>
+            <path d="M35 98L25 119M35 98L48 119" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="35" cy="98" r="6" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="decor-citadel" aria-hidden="true">
+          <svg viewBox="0 0 240 190" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 170V102l28-20 19 11 22-32 26 14 22-29 28 19 26-15 28 21v99H16Z" opacity=".9"/>
+            <path d="M42 102h20v68H42zm35 0h19v68H77zm34-7h22v75h-22zm39 15h18v60h-18z" fill="#fbfcfa" opacity=".55"/>
+            <path d="M23 102l21-15 19 10 22-31 26 13 22-28 29 18 25-13 27 20" stroke="#fbfcfa" stroke-width="5" opacity=".6"/>
+          </svg>
+        </div>
+        <h1>مساري</h1>
+        <h2>اكتشف اهتماماتك، واختر مستقبلك</h2>
+        <p>اختبار بسيط يساعدك على التعرّف على التخصصات المناسبة لك،<br>وبناء مستقبلك الجامعي بثقة.</p>
+      </section>
+
+      <div class="quiz-card">
+        <div class="intro-screen" id="introScreen">
+          <div class="intro-icon compass-sticker" aria-hidden="true">
+            <svg viewBox="0 0 120 120" role="img" aria-label="بوصلة ترمز إلى اكتشاف المسار">
+              <defs>
+                <linearGradient id="compassBg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#2f9e7b"/>
+                  <stop offset="100%" stop-color="#176b5c"/>
+                </linearGradient>
+                <linearGradient id="compassNeedle" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#bcefe0"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="54" fill="url(#compassBg)"/>
+              <circle cx="60" cy="60" r="45" fill="#f8fffc" opacity=".96"/>
+              <circle cx="60" cy="60" r="38" fill="none" stroke="#b9ded2" stroke-width="2"/>
+              <path d="M60 18v8M60 94v8M18 60h8M94 60h8" stroke="#176b5c" stroke-width="3" stroke-linecap="round"/>
+              <path d="M60 29l10 31-10 31-10-31z" fill="url(#compassNeedle)"/>
+              <path d="M60 29l10 31-10-9z" fill="#2f9e7b"/>
+              <path d="M60 91L50 60l10 9z" fill="#176b5c" opacity=".9"/>
+              <circle cx="60" cy="60" r="6" fill="#176b5c" stroke="#fff" stroke-width="3"/>
+              <path d="M60 8l2.7 6.2 6.3 2.8-6.3 2.8L60 26l-2.7-6.2-6.3-2.8 6.3-2.8z" fill="#f2c94c"/>
+            </svg>
+          </div>
+          <h3>قبل ما نبلّش</h3>
+          <p>هذا الاختبار <b>استرشادي</b>، ويهدف إلى مساعدتك على التعرّف على اهتماماتك بطريقة مبسّطة، وتقديم أفكار عن المجالات والتخصصات الأقرب إليك.</p>
+          <div class="intro-list">
+            <div class="intro-item"><b>✓</b><span>النتيجة ليست حكماً نهائياً، ولا تُغني عن البحث والاستشارة.</span></div>
+            <div class="intro-item"><b>✓</b><span>أجب وفق اهتماماتك الحقيقية، وما تراه مناسباً لك.</span></div>
+            <div class="intro-item"><b>✓</b><span>تعتمد النتيجة على إجاباتك واهتماماتك كما تظهر في الاختبار.</span></div>
+          </div>
+          <form class="contact-form intro-gate" id="gateForm" style="margin:18px auto 0;max-width:420px;text-align:right">
+            <div class="form-field">
+              <label for="gateName">الاسم الكامل <span>*</span></label>
+              <input type="text" id="gateName" name="name" autocomplete="name" placeholder="مثال: أحمد محمد" required maxlength="80" />
+            </div>
+            <div class="form-field">
+              <label for="gatePhone">رقم الهاتف <span>*</span></label>
+              <input type="tel" id="gatePhone" name="phone" autocomplete="tel" placeholder="مثال: 09xxxxxxxx" required maxlength="20" inputmode="tel" dir="ltr" style="text-align:right" />
+              <div class="field-hint">أدخل رقماً صالحاً. لن يبدأ الاختبار قبل إدخال الاسم والرقم.</div>
+            </div>
+            <button class="btn primary start-btn" id="startBtn" type="submit">ابدأ الاختبار</button>
+          </form>
+        </div>
+
+        <div id="quizContent" class="hidden">
+          <div class="section-title" id="titleBar">
+            <h3>اكتشف مسارك</h3>
+            <div class="qCounter" id="qCounter">السؤال 1</div>
+          </div>
+          <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+          <div class="saved-hint" id="savedHint">تم حفظ تقدمك ✓</div>
+          <div id="questions" aria-live="polite"></div>
+
+          <div class="result" id="resultBox" tabindex="-1">
+            <div class="resultBox">
+              <div class="pill">🎉 نتيجتك جاهزة</div>
+              <h4 id="topResult">—</h4>
+              <div class="type" id="typeLabel"></div>
+              <div class="majors" id="majorsList" aria-label="التخصصات المقترحة"></div>
+              <p class="advice" id="adviceText">—</p>
+              <div class="study-tip" id="studyTipBox">
+                <div class="study-tip-title">💡 نصيحة للدراسة</div>
+                <p id="studyTipText">—</p>
+              </div>
+              <div class="kind-note" id="kindNote">
+                <b>الكلية والمعهد:</b> الكلية برنامج جامعي أطول وأكثر عمقاً نظرياً غالباً، بينما المعهد يركّز على الجانب التطبيقي وتكون مدته أقصر في كثير من الحالات. اختر حسب أسلوب تعلّمك وهدفك المهني.
+              </div>
+              <div class="edu-note" id="eduNote">
+                <div class="edu-note-title">أنواع التعليم</div>
+                <div class="edu-grid">
+                  <div class="edu-item"><b>عام</b><span>رسوم أقل، ومقاعد محدودة حسب المفاضلة.</span></div>
+                  <div class="edu-item"><b>موازي</b><span>رسوم أعلى، وفرص قبول أوسع غالباً.</span></div>
+                  <div class="edu-item"><b>مفتوح</b><span>تعليم مرن بفرص قبول أوسع، وغالباً بنظام عن بُعد أو جزئي.</span></div>
+                  <div class="edu-item"><b>افتراضي</b><span>دراسة عن بُعد بالكامل عبر المنصات الإلكترونية.</span></div>
+                  <div class="edu-item"><b>خاص</b><span>جامعات خاصة برسومها وشروط قبولها المستقلة.</span></div>
+                </div>
+              </div>
+              <div class="scores-title">مؤشرات التوافق</div>
+              <p class="scores-help">النسبة مؤشر تقريبي لمدى توافق إجاباتك مع خصائص المجال في هذا الاختبار، ولا تمثل احتمال نجاحك أو ملاءمتك الأكاديمية أو المهنية بشكل قطعي.</p>
+              <div class="scores" id="scoresList"></div>
+              <div class="confidence" id="confidenceLabel"></div>
+              <div class="result-note">
+                هذه النتيجة استرشادية لمساعدتك على اكتشاف اهتماماتك، وليست حكماً نهائياً بشأن التخصص المناسب لك. وقد تختلف ملاءمة التخصص حسب شروط القبول ونوع التعليم (عام، موازي، مفتوح، افتراضي، خاص) والخطة الدراسية في كل عام.
+              </div>
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn" id="shareBtn" type="button">مشاركة صورة</button>
+                <button class="btn" id="copyTextBtn" type="button">نسخ كنص</button>
+                <button class="btn" id="restartBtn" type="button">ابدأ من جديد</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions" id="navActions">
+            <button class="btn" id="backBtn" type="button" disabled>رجوع</button>
+            <button class="btn ghost" id="skipBtn" type="button" title="تخطي هذا السؤال">تخطي</button>
+            <button class="btn primary" id="nextBtn" type="button">التالي</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="about-card" id="about" aria-label="عن اختبار مساري">
+        <h3>ما هو اختبار مساري؟</h3>
+        <p>اختبار تفاعلي يساعدك على فهم اهتماماتك، ويمنحك مؤشرات أولية عن المجالات والتخصصات التي قد تكون أقرب إلى طريقة تفكيرك واهتماماتك.</p>
+      </section>
+
+      <section class="union-about" aria-label="عن الاتحاد">
+        <div>
+          <h3>عن الاتحاد</h3>
+          <p>اتحاد طلابي يُعنى بالشأن الطلابي، ويمثّل الطلبة، ويسهم في دعم الأنشطة والفعاليات العلمية والثقافية والاجتماعية، ومتابعة القضايا والاهتمامات المرتبطة بالحياة الجامعية.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="site-footer" id="footer">
+      <div class="footer-block footer-slogan">
+        <div class="slogan">نحو جيل يصنعه الشباب</div>
+      </div>
+      <div class="footer-block footer-counter">
+        <div class="counter" aria-label="عدد الزيارات"><b id="visitCount">—</b></div>
+      </div>
+      <div class="footer-block footer-social">
+        <div class="social-links" aria-label="روابط الاتحاد على مواقع التواصل">
+          <a class="social-link" href="https://www.instagram.com/studentaleppo" target="_blank" rel="noopener noreferrer" aria-label="إنستغرام اتحاد طلبة سوريا">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor"/></svg>
+          </a>
+          <a class="social-link" href="https://www.facebook.com/share/1Bwm9gAzdP/" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك اتحاد طلبة سوريا">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9V10H8v3h2.6v8h2.8Z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="dev-credit">
+        <a href="https://www.facebook.com/share/1DmmdLQL2F/" target="_blank" rel="noopener noreferrer" aria-label="مطور المنصة محمد فرح - فيسبوك">مطور المنصة محمد فرح</a>
+      </div>
+      <div class="copyright">© مساري</div>
+    </footer>
+  </div>
+
+  <div class="major-modal" id="majorModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="majorModalTitle">
+    <div class="major-modal-card">
+      <div class="major-modal-top">
+        <div>
+          <div class="major-modal-title" id="majorModalTitle">التخصص</div>
+          <div class="major-modal-sub" id="majorModalSub"></div>
+        </div>
+        <button class="major-close" id="majorModalClose" type="button" aria-label="إغلاق">×</button>
+      </div>
+      <div class="major-info"><h5>📚 عن الاختصاص</h5><p id="majorModalSummary"></p></div>
+      <div class="major-info"><h5>⏳ مدة الدراسة</h5><div class="major-duration" id="majorModalDuration"></div></div>
+      <div class="major-info"><h5>💼 مجالات العمل بعد التخرج</h5><div class="major-jobs" id="majorModalJobs"></div></div>
+      <div class="major-modal-note">المعلومات للتعريف بالاختصاص بشكل مبسّط، وقد تختلف الخطة الدراسية وبعض فرص العمل بحسب البرنامج والجامعة.</div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+<script>
+
+  const EMBEDDED_LOGO = "assets/masari-logo.png";
+  const UNION_WIDE = "assets/union-logo-wide.png";
+  const UNION_MARK = "assets/union-mark.png";
+  document.querySelectorAll('[data-embedded-logo]').forEach(img => img.src = EMBEDDED_LOGO);
+  document.querySelectorAll('[data-union-wide]').forEach(img => img.src = UNION_WIDE);
+  document.querySelectorAll('[data-union-mark]').forEach(img => img.src = UNION_MARK);
+
+const TRACKS = {
+    anal: {
+      title: "🧠 عقل مفكر",
+      type: "لديك اهتمام بالتحليل والبحث والاستنتاج",
+      majors: {
+        scientific: [
+          {name:"🔬 رياضيات", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💊 صيدلة", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة البرمجيات", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"🧪 مخابر", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"🧠 علم النفس", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"⚖️ حقوق", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"📰 إعلام", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"💼 إدارة الأعمال", university:"جامعة دمشق", kind:"معهد", branch:"literary"}
+        ]
+      },
+      advice: "تفضّل فهم الأمور من جذورها والوصول إلى النتائج بالاعتماد على الدليل والمنطق. لذلك أضفنا لك خيارات أكاديمية وتقنية متنوعة."
+    },
+    design: {
+      title: "🛠️ صانع ومبتكر",
+      type: "لديك اهتمام بالتصميم والبناء وتحويل الأفكار إلى واقع",
+      majors: {
+        scientific: [
+          {name:"💻 هندسة البرمجيات ونظم المعلومات", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"🏛️ هندسة معمارية", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة الشبكات", university:"جامعة حلب", kind:"معهد", branch:"scientific"},
+          {name:"⚙️ تحكم وأتمتة", university:"جامعة دمشق", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"🎨 فنون جميلة", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"🏛️ تاريخ", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"📰 إعلام", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"💼 علاقات عامة", university:"جامعة دمشق", kind:"كلية", branch:"literary"}
+        ]
+      },
+      advice: "تفضّل تحويل الأفكار إلى نتائج ملموسة. لذلك تظهر في المقترحات مجالات التصميم والهندسة والحاسوب، إلى جانب مسارات تطبيقية يمكن أن تمنحك خبرة عملية."
+    },
+    comm: {
+      title: "📣 راوي ومؤثر",
+      type: "لديك اهتمام بالتواصل واللغة والتأثير",
+      majors: {
+        scientific: [
+          {name:"💻 هندسة البرمجيات ونظم المعلومات", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"📊 اقتصاد", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة البرمجيات", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"💼 إدارة الأعمال", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"📺 الإعلام الإلكتروني", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"📝 اللغة العربية وآدابها", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"📰 إعلام", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"💼 إدارة الأعمال", university:"جامعة دمشق", kind:"معهد", branch:"literary"}
+        ]
+      },
+      advice: "تتميّز في التعبير وفهم الآخرين ونقل الأفكار. لذلك ركّزنا على الإعلام واللغات والإدارة والاقتصاد، مع خيارات أكاديمية وتقنية متنوعة."
+    },
+    manage: {
+      title: "📋 منظّم وقائد",
+      type: "لديك اهتمام بالتنظيم والتخطيط واتخاذ القرار",
+      majors: {
+        scientific: [
+          {name:"📈 اقتصاد", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"🏗️ هندسة مدنية", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💼 إدارة الأعمال", university:"جامعة دمشق", kind:"معهد", branch:"scientific"},
+          {name:"💰 محاسبة", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"📊 اقتصاد", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"⚖️ حقوق", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"💼 إدارة الأعمال", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"💰 محاسبة", university:"جامعة دمشق", kind:"معهد", branch:"literary"}
+        ]
+      },
+      advice: "تفضّل العمل وفق هدف واضح وخطة ونتيجة قابلة للقياس. لذلك تظهر أمامك الإدارة والاقتصاد والحقوق والمجالات المالية بخيارات أكاديمية وتقنية متنوعة."
+    },
+    social: {
+      title: "🤝 إنسان ومساند",
+      type: "لديك اهتمام بمساعدة الناس وفهم احتياجاتهم",
+      majors: {
+        scientific: [
+          {name:"🏥 علم النفس السريري", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"🏥 تمريض", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"🩺 معالجة فيزيائية", university:"جامعة دمشق", kind:"معهد", branch:"scientific"},
+          {name:"🩺 معالجة فيزيائية", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"🧑‍🏫 إرشاد نفسي", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"🧑‍🏫 المناهج وطرائق التدريس", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"🤝 علم الاجتماع", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"📚 تاريخ", university:"جامعة حلب", kind:"كلية", branch:"literary"}
+        ]
+      },
+      advice: "تهتم بالناس وتقدّر المساعدة والدعم. لذلك أدرجنا لك مسارات صحية وتربوية، مع خيارات أكاديمية وتقنية متنوعة."
+    },
+    tech: {
+      title: "💡 تقني وحلّال مشاكل",
+      type: "لديك اهتمام بالتقنية والتجربة وحل المشكلات",
+      majors: {
+        scientific: [
+          {name:"💻 هندسة البرمجيات ونظم المعلومات", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة البرمجيات ونظم المعلومات", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة البرمجيات", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة الشبكات", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"📊 الإعلام الإلكتروني", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"🎨 فنون جميلة", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"💼 تسويق ومبيعات", university:"جامعة دمشق", kind:"معهد", branch:"literary"},
+          {name:"📰 إعلام", university:"جامعة حلب", kind:"معهد", branch:"literary"}
+        ]
+      },
+      advice: "تستمتع عندما تواجه مشكلة يمكنك تفكيكها وتجربة حلول متعددة لها. لذلك ركّزنا على المعلوماتية والحاسوب والمسارات التطبيقية القريبة من التقنية."
+    },
+    business: {
+      title: "💼 مبادر وريادي",
+      type: "لديك اهتمام بالمبادرة واستثمار الفرص وبناء المشاريع",
+      majors: {
+        scientific: [
+          {name:"📊 اقتصاد", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"📊 اقتصاد", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💼 إدارة الأعمال", university:"جامعة دمشق", kind:"معهد", branch:"scientific"},
+          {name:"💼 إدارة الأعمال", university:"جامعة حلب", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"📊 اقتصاد", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"💼 اقتصاد", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"💼 إدارة الأعمال", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"💰 محاسبة", university:"جامعة دمشق", kind:"معهد", branch:"literary"},
+          {name:"💼 تسويق ومبيعات", university:"جامعة دمشق", kind:"معهد", branch:"literary"}
+        ]
+      },
+      advice: "تفضّل المبادرة وتحويل الفرص إلى مشاريع ونتائج. لذلك ستجد أمامك الاقتصاد وإدارة الأعمال والعلوم المالية ضمن خيارات أكاديمية وتقنية متنوعة."
+    },
+    creative: {
+      title: "🎨 مبدع وخيالي",
+      type: "لديك اهتمام بالفن والخيال وصناعة الأفكار الجديدة",
+      majors: {
+        scientific: [
+          {name:"🏛️ هندسة معمارية", university:"جامعة دمشق", kind:"كلية", branch:"scientific"},
+          {name:"🏗️ هندسة مدنية", university:"جامعة حلب", kind:"كلية", branch:"scientific"},
+          {name:"💻 هندسة الشبكات", university:"جامعة حلب", kind:"معهد", branch:"scientific"},
+          {name:"⚙️ تحكم وأتمتة", university:"جامعة دمشق", kind:"معهد", branch:"scientific"}
+        ],
+        literary: [
+          {name:"🎨 فنون جميلة", university:"جامعة دمشق", kind:"كلية", branch:"literary"},
+          {name:"🎨 فلسفة", university:"جامعة حلب", kind:"كلية", branch:"literary"},
+          {name:"📰 إعلام", university:"جامعة حلب", kind:"معهد", branch:"literary"},
+          {name:"📺 إعلام", university:"جامعة دمشق", kind:"كلية", branch:"literary"}
+        ]
+      },
+      advice: "تفضّل التعبير والخيال وصناعة الأفكار المختلفة. لذلك أضفنا الفنون والعمارة والإعلام، إلى جانب خيارات تطبيقية متنوعة."
+    }
+  };
+
+  // بنك أسئلة متنوع؛ يتم اختيار مجموعة مناسبة عند بدء الاختبار.
+
+const QUESTION_BANK = [
+    ["عندما تواجه مشكلة معقدة، ما أول ما تفضّل فعله؟", [["anal","أحلّل الأسباب وأرتّب المعلومات"],["tech","أجرّب أكثر من حل عملي"],["manage","أضع خطة وخطوات واضحة"],["social","أسأل الأشخاص المتأثرين بالمشكلة"]]],
+    ["أي نوع من المهام يمكن أن تنسى الوقت أثناء القيام به؟", [["design","أبني أو أصمّم شيئاً جديداً"],["creative","أرسم أو أكتب أو أبتكر فكرة"],["tech","أبرمج أو أتعامل مع التقنية"],["comm","أشرح فكرة وأناقشها"]]],
+    ["إذا طُلب منك تنفيذ مشروع من الصفر، فأي دور تختار؟", [["business","أبحث عن الفرصة وكيفية تحويلها إلى مشروع"],["manage","أنظّم الفريق والموارد"],["design","أحوّل الفكرة إلى منتج أو تصميم"],["comm","أقدّم الفكرة وأتواصل مع الناس"]]],
+    ["أي إنجاز تشعر أنه الأقرب إلى شخصيتك؟", [["anal","اكتشاف سبب أو نتيجة لم تكن واضحة"],["creative","إنتاج عمل مميز وفريد"],["social","مساعدة شخص وتحسين تجربته"],["business","إطلاق فكرة وتحقيق نمو فيها"]]],
+    ["عندما تتعلم موضوعاً جديداً، ما الطريقة التي تفضّلها؟", [["anal","أقرأ التفاصيل وأقارن بين المصادر"],["tech","أجرّب بنفسي وأتعلّم من الخطأ"],["comm","أناقشه مع شخص وأشرحه بصوت عالٍ"],["creative","أحوّل الفكرة إلى رسم أو مثال بصري"]]],
+    ["في أي بيئة عمل تتخيّل نفسك مرتاحاً؟", [["social","مكان فيه تواصل ومساعدة للناس"],["tech","بيئة تقنية فيها تجارب وحلول"],["manage","فريق لديه أهداف ومواعيد واضحة"],["creative","مساحة فيها حرية وإبداع"]]],
+    ["إذا اختلف شخصان ضمن فريق، ما الدور الذي تفضّل القيام به؟", [["comm","أستمع إلى الطرفين وأوضح وجهات النظر"],["social","أحاول فهم احتياج كل شخص"],["manage","أحدّد المشكلة وأقترح قراراً عملياً"],["business","أبحث عن حل يرضي الأطراف ويخدم الهدف"]]],
+    ["ما الشيء الذي يحمّسك أكثر في مشروع جديد؟", [["business","فكرة يمكن أن تتحول إلى فرصة حقيقية"],["design","كيفية صناعة المنتج أو الشكل النهائي"],["creative","الفكرة المختلفة وغير التقليدية"],["tech","التحدي التقني وكيفية حلّه"]]],
+    ["إذا طُلب منك تحسين تطبيق أو موقع، من أين تبدأ؟", [["tech","أفحص المشكلة وأجرّب حلولاً تقنية"],["design","أفكّر في تجربة المستخدم والشكل"],["anal","أحلّل البيانات والملاحظات"],["creative","أقترح طريقة جديدة وجذابة للتجربة"]]],
+    ["أي نوع من القرارات تتخذه بثقة أكبر؟", [["manage","قرارات فيها ترتيب ومسؤولية"],["business","قرارات فيها فرصة ومخاطرة محسوبة"],["anal","قرارات مبنية على معلومات وأدلة"],["social","قرارات تراعي تأثيرها في الناس"]]],
+    ["إذا كان لديك وقت فراغ، فأي نشاط أقرب إليك؟", [["creative","الرسم أو الكتابة أو صناعة المحتوى"],["tech","تجربة برنامج أو أداة جديدة"],["social","الحديث مع شخص أو مساعدته"],["comm","مشاهدة محتوى ومناقشة أفكاره"]]],
+    ["ما الشيء الذي يلجأ إليك الناس غالباً بسببه؟", [["anal","تحليل المشكلة وفهم التفاصيل"],["manage","ترتيب الأمور ووضع خطة"],["comm","شرح الفكرة أو إقناع الآخرين"],["social","الاستماع وتقديم الدعم"]]],
+    ["أي نتيجة تعتبرها نجاحاً حقيقياً؟", [["design","شيء ملموس صنعته بيدي أو بفكرتي"],["business","مشروع نما وحقق نتيجة"],["social","شخص استفاد فعلاً من مساعدتي"],["anal","حل صحيح أثبتته الأدلة"]]],
+    ["إذا طُلب منك تقديم فكرة أمام مجموعة، ما الجزء الذي تستمتع به؟", [["comm","الحديث والإقناع"],["creative","إعداد العرض بشكل مميز"],["business","إظهار قيمة الفكرة وفرصها"],["manage","تنظيم العرض والوقت والنقاط"]]],
+    ["أي نوع من التحديات يجذبك أكثر؟", [["tech","لغز تقني يحتاج إلى التجريب"],["anal","مسألة تحتاج إلى استنتاج دقيق"],["creative","مهمة مفتوحة بلا إجابة واحدة"],["business","تحدٍّ فيه فرصة ونتيجة قابلة للنمو"]]],
+    ["عندما تلاحظ خطأً متكرراً، ما أول رد فعل لديك؟", [["anal","أبحث عن السبب الجذري"],["tech","أجرّب تعديلات حتى أصل إلى الحل"],["manage","أضع طريقة تمنع تكراره"],["design","أعيد تصميم الخطوة المسببة للمشكلة"]]],
+    ["أي مادة أو مجال يمكن أن يثير فضولك؟", [["anal","العلوم والبحث"],["tech","البرمجة والتقنية"],["creative","الفن والتصميم"],["social","علم النفس والمجتمع"]]],
+    ["إذا أسست مشروعاً، ما أول شيء تفكّر فيه؟", [["business","من المستفيد وما الفرصة؟"],["manage","كيف أنظّم الفريق والعمليات؟"],["comm","كيف أوصل الفكرة إلى الجمهور؟"],["design","كيف سيكون المنتج وتجربة المستخدم؟"]]],
+    ["ما أكثر شيء يزعجك في العمل؟", [["manage","الفوضى وعدم وجود خطة"],["anal","اتخاذ قرارات بلا معلومات كافية"],["creative","عدم وجود مساحة للأفكار"],["social","تجاهل احتياجات الناس"]]],
+    ["إذا كانت لديك فكرة جديدة، كيف تفضّل تطويرها؟", [["creative","أرسمها وأجرّب أشكالاً مختلفة"],["tech","أبني نموذجاً أولياً"],["business","أختبر مدى حاجة الناس إليها"],["comm","أتحدث عنها وأجمع آراء الناس"]]],
+    ["أي مهارة تفضّل تطويرها أكثر؟", [["anal","البحث والاستنتاج"],["tech","البرمجة وحل المشكلات"],["comm","الخطابة والتواصل"],["social","الاستماع وفهم الآخرين"]]],
+    ["إذا أصبح لديك فريق، ما الشيء الذي تفعله تلقائياً؟", [["manage","أوزّع المهام وأتابع التقدم"],["business","أحدّد الهدف والفرصة"],["comm","أحافظ على التواصل بين الأعضاء"],["social","أنتبه إلى احتياجات كل شخص"]]],
+    ["أي نوع من المحتوى يجذبك أكثر؟", [["creative","فيديوهات وصور ذات فكرة بصرية"],["comm","حوارات وقصص وتجارب"],["anal","شرح علمي وتحليلات"],["tech","تقنية وتجارب وأدوات"]]],
+    ["إذا فشلت محاولتك الأولى، ماذا تفعل؟", [["tech","أعدّل الحل وأعيد التجربة"],["anal","أحلّل سبب الفشل"],["business","أغيّر الخطة وأبحث عن فرصة ثانية"],["creative","أجرّب فكرة مختلفة تماماً"]]],
+    ["ما الأثر الذي تحب أن يتركه عملك بعد سنة؟", [["social","أشخاص استفادوا وتحسّنت حياتهم"],["business","مشروع أو مبادرة نمت"],["design","منتج أو عمل واضح ومميز"],["anal","معرفة أو حل ساعد الآخرين"]]],
+    ["إذا كان لديك معرض أو فعالية، فأي جزء يحمّسك أكثر؟", [["manage","تنظيم التفاصيل والبرنامج"],["comm","التقديم والتواصل مع الحضور"],["creative","الهوية البصرية والديكور"],["business","الترويج والشراكات"]]],
+    ["أي وصف أقرب إلى طريقة تفكيرك؟", [["anal","أسأل: لماذا؟ وما الدليل؟"],["creative","أسأل: ماذا لو جرّبنا شيئاً مختلفاً؟"],["business","أسأل: أين الفرصة؟"],["social","أسأل: كيف سيتأثر الناس؟"]]],
+    ["إذا أُعطيت بيانات كثيرة، ماذا يمكن أن تفعل؟", [["anal","أبحث عن الأنماط والاستنتاجات"],["tech","أستخدم أداة أو برنامجاً لتحليلها"],["manage","أحوّلها إلى مؤشرات وخطة متابعة"],["business","أبحث عن فرصة أو قرار مفيد منها"]]],
+    ["أي نوع من العلاقات المهنية تفضّل بناءه؟", [["comm","شبكة واسعة من الناس والتواصل معهم"],["business","شراكات وفرص تعاون"],["social","علاقات قائمة على الثقة والدعم"],["manage","فريق متعاون ومنظّم"]]],
+    ["إذا كان عليك اختيار مشروع جانبي، ماذا تختار؟", [["tech","تطبيق أو أداة رقمية"],["creative","قناة محتوى أو مشروع فني"],["business","متجر أو مشروع صغير"],["social","مبادرة تفيد فئة من الناس"]]],
+    ["ما الذي يجعلك تقول: هذا العمل يشبهني؟", [["design","عندما أرى فكرة تحولت إلى شيء ملموس"],["comm","عندما أستطيع إيصال فكرة إلى الناس"],["anal","عندما أصل إلى نتيجة منطقية"],["manage","عندما يسير العمل بشكل منظّم"]]],
+    ["إذا طُلب منك حل مشكلة في الجامعة أو المدرسة، ماذا تفضّل؟", [["social","أفهم المشكلة من وجهة نظر الطلاب"],["manage","أرتّب الخطوات والمسؤوليات"],["tech","أبني حلاً رقمياً إن أمكن"],["business","أبحث عن طريقة قابلة للتوسع والاستمرار"]]],
+    ["أي عبارة أقرب إليك؟", [["creative","أحب أن يكون لي أسلوبي الخاص"],["anal","أحب أن أفهم قبل أن أحكم"],["comm","أحب أن أتحدث وأستمع وأناقش"],["business","أحب أن أبدأ بدلاً من الانتظار"]]],
+    ["عندما تعمل ضمن فريق، ماذا تحتاج أكثر؟", [["manage","أدوار ومواعيد واضحة"],["social","جو داعم ومحترم"],["creative","حرية في تقديم الأفكار"],["tech","أدوات ومشكلة حقيقية لأحلّها"]]],
+    ["إذا صمّمت غرفة دراسة مثالية، بماذا تهتم أولاً؟", [["design","توزيع المساحة والإضاءة والشكل"],["manage","ترتيب الأدوات وسهولة الوصول"],["creative","لمسة شخصية وألوان مريحة"],["tech","أجهزة وتقنيات تسهّل العمل"]]],
+    ["أي مهمة جامعية تستمتع بها أكثر؟", [["anal","بحث أو تقرير يحتاج تدقيقاً"],["design","مشروع عملي أو مجسّم"],["comm","عرض تقديمي أمام الصف"],["social","عمل جماعي يساعد زملاءك"]]],
+    ["لو صمّمت غلاف كتاب أو ملصق، ما الأهم عندك؟", [["design","التناسق البصري وسهولة القراءة"],["creative","فكرة غير متوقعة تلفت الانتباه"],["comm","أن يوصل الرسالة بسرعة"],["anal","أن يعكس المحتوى بدقة"]]],
+    ["كيف تتعامل مع موعد نهائي ضيّق؟", [["manage","أقسّم الوقت وألتزم بالأولويات"],["tech","أبحث عن أدوات تختصر الجهد"],["business","أركّز على النتيجة الأهم فقط"],["creative","أبتكر طريقة أسرع للتنفيذ"]]],
+    ["ما الذي يجذبك في المنتجات الجديدة؟", [["design","شكلها وسهولة استخدامها"],["tech","التقنية التي تعمل بها"],["business","قيمتها في السوق"],["anal","المواصفات والأرقام"]]],
+    ["إذا ساعدت صديقاً في اختيار تخصص، بماذا تبدأ؟", [["social","أفهم شخصيته وما يحب"],["anal","أناقش معه نقاط قوته وضعفه"],["comm","أسأله أسئلة توضّح ما يفضّله"],["manage","نضع معاً قائمة خيارات مرتبة"]]],
+    ["أي جزء من صناعة فيديو يهمك أكثر؟", [["creative","الفكرة والسيناريو"],["design","التصميم والمونتاج والشكل"],["comm","الأسلوب والطريقة في الحديث"],["tech","التصوير والمؤثرات التقنية"]]],
+    ["عندما تدخل مكاناً جديداً (مقهى أو مكتبة)، بماذا تلاحظ أولاً؟", [["design","الترتيب والديكور والإضاءة"],["social","الأجواء والناس"],["anal","التفاصيل الصغيرة والتنظيم"],["business","كيف يقدّمون الخدمة وهل تنجح"]]],
+    ["لو طُلب منك تحسين خدمة في كليتك، ماذا تفعل؟", [["manage","أجمع الملاحظات وأضع خطة"],["design","أعيد تصميم تجربة الطالب"],["tech","أبني أداة أو نموذجاً رقمياً"],["social","أتحدث مع الطلاب وأفهم احتياجاتهم"]]],
+    ["أي جملة تصف أسلوبك في التعلم؟", [["tech","أتعلم بالممارسة والتجربة"],["anal","أتعلم بالفهم العميق"],["creative","أتعلم بالتجريب الحر"],["comm","أتعلم بالحوار والشرح"]]],
+    ["ما الذي يجعل مشروعاً «جميلاً» في نظرك؟", [["design","شكله متقن واستخدامه سهل"],["creative","فيه لمسة مبتكرة"],["anal","بنيته منطقية ومتماسكة"],["social","يفيد الناس فعلاً"]]],
+    ["إذا عملت في متجر أو مبادرة طلابية، أي دور تفضّل؟", [["business","المبيعات وتطوير الفرص"],["manage","التنسيق والمتابعة"],["comm","الترويج والتواصل"],["design","شكل المكان والمنتجات"]]],
+    ["كيف تختار بين فكرتين لمشروع؟", [["anal","أقارن المزايا والأدلة"],["business","أرى أيهما أقرب للفرصة"],["creative","أختار الأجرأ والأكثر تميّزاً"],["design","أختار الأوضح في التنفيذ والشكل"]]],
+    ["ما الذي تستمتع به في المواد العملية أكثر؟", [["tech","التجربة والاختبار"],["design","الإنتاج والصنع"],["manage","التنظيم والخطوات"],["anal","فهم النظرية خلف التجربة"]]],
+    ["لو صمّمت تطبيقاً لطلاب جامعتك، ما أول ميزة تضيفها؟", [["social","مساعدة الطلاب على التواصل والدعم"],["manage","تنظيم الجداول والمهام"],["design","واجهة بسيطة وجميلة"],["tech","أتمتة شيء مزعج حالياً"]]],
+    ["أي موقف يعطيك طاقة أكثر؟", [["comm","نقاش حيوي مع أشخاص"],["creative","جلسة أفكار حرة"],["tech","حل مشكلة تقنية صعبة"],["business","صفقة أو فرصة تمضي قدماً"]]],
+    ["عندما ترى تصميماً سيئاً (موقع أو ملصق)، ما رد فعلك؟", [["design","أفكّر كيف أصلح الشكل والتجربة"],["anal","أحدّد أين الخلل بالضبط"],["creative","أتخيّل بديلاً أجمل"],["comm","أتساءل هل الرسالة وصلت"]]],
+    ["ما الذي تفضّله في العمل الجماعي؟", [["manage","وضوح الأدوار والمتابعة"],["social","الاحترام والدعم المتبادل"],["design","الوصول لمنتج نهائي متقن"],["business","تحقيق هدف ملموس"]]],
+    ["إذا قرأت خبراً عن ابتكار جديد، بماذا تهتم؟", [["tech","كيف يعمل تقنياً"],["business","أثره على السوق والناس"],["anal","هل الادعاءات مثبتة"],["creative","الإمكانيات الجديدة التي يفتحها"]]],
+    ["أي نشاط تطوعي أقرب إليك؟", [["social","دعم نفسي أو مساعدة مباشرة"],["comm","تنظيم حملات توعية"],["manage","تنسيق فرق وفعاليات"],["design","تصميم مواد بصرية للحملة"]]],
+    ["ما الذي يجعل يومك الدراسي «ناجحاً»؟", [["manage","أنجزت ما خططت له"],["anal","فهمت موضوعاً صعباً"],["creative","ابتكرت فكرة أو عملاً"],["social","ساعدت زميلاً أو استفدت من نقاش"]]],
+    ["لو اخترت مشروعاً للتخرج، ماذا تختار؟", [["tech","حل تقني لمشكلة حقيقية"],["design","منتج أو تصميم يمكن استخدامه"],["social","مشروع يخدم فئة مجتمعية"],["business","فكرة قابلة للتحول إلى مبادرة"]]],
+    ["كيف تتعامل مع تعليمات غامضة في مهمة؟", [["anal","أوضح المطلوب قبل البدء"],["design","أبدأ بنموذج وأعدّل حسب الفهم"],["manage","أضع افتراضات وأراجعها"],["comm","أسأل وأناقش حتى يتضح"]]],
+    ["ما الذي يجذبك في العمارة أو التصميم الداخلي؟", [["design","تحويل الفراغ إلى تجربة مريحة"],["creative","التعبير عن فكرة عبر المكان"],["anal","الحسابات والقيود الهندسية"],["manage","إدارة المشروع من الفكرة للتنفيذ"]]],
+    ["إذا كان لديك حساب على وسائل التواصل لمشروعك، ماذا تركّز عليه؟", [["comm","التفاعل والردود"],["creative","المحتوى المميز بصرياً"],["business","الوصول والجمهور المناسب"],["design","هوية بصرية متناسقة"]]],
+    ["أي نوع من الألغاز تستمتع به؟", [["anal","ألغاز منطقية واستنتاج"],["tech","ألغاز برمجية أو تقنية"],["creative","ألغاز مفتوحة بلا حل واحد"],["design","ألغاز بصرية أو تركيب أشكال"]]],
+    ["ما أول انطباع تريد أن يتركه عملك عند الآخرين؟", [["design","متقن وسهل الاستخدام"],["social","إنساني ومفيد"],["business","ذكي وقابل للنمو"],["anal","دقيق وموثوق"]]],
+    ["إذا طُلب منك تلخيص محاضرة طويلة، كيف تفعل؟", [["anal","أستخرج الأفكار الرئيسية والعلاقات"],["comm","أعيد صياغتها بلغة بسيطة"],["design","أحوّلها إلى مخطط أو شكل"],["manage","أرتّبها كنقاط وخطوات"]]],
+    ["أي بيئة دراسية تفضّل؟", [["manage","جدول ثابت ومكان منظّم"],["creative","مرونة وتغيير بين الأماكن"],["social","مجموعة دراسة داعمة"],["tech","أدوات رقمية تسهّل المراجعة"]]],
+    ["لو صمّمت شعاراً لمبادرة طلابية، ما الأهم؟", [["design","البساطة والوضوح البصري"],["creative","فكرة رمزية قوية"],["comm","أن يُفهم من أول نظرة"],["business","أن يناسب الاستخدام على كل المنصات"]]],
+    ["عندما تسمع عن مشكلة اجتماعية، ما رد فعلك الأول؟", [["social","أتعاطف وأفكّر في من يتأثر"],["anal","أبحث عن الأسباب والبيانات"],["business","أتساءل عن حلول مستدامة"],["comm","أفكّر كيف أنشر الوعي"]]],
+    ["ما الذي تستمتع به أكثر في التجارب المخبرية أو العملية؟", [["tech","تشغيل الأجهزة وفهم الآلية"],["anal","تفسير النتائج"],["design","ضبط الإعدادات بدقة"],["manage","اتباع protoكول منظّم"]]],
+    ["إذا اخترت بين مشروعين: أحدهما آمن والآخر جريء، ماذا تفعل؟", [["business","أقيّم العائد والمخاطرة"],["creative","أختار الجريء إن كان مميزاً"],["anal","أجمع معلومات أكثر قبل القرار"],["manage","أرى أيهما يمكن تنظيمه بشكل أفضل"]]],
+    ["أي دور في مسابقة طلابية يناسبك؟", [["comm","المتحدث باسم الفريق"],["design","مسؤول الشكل والعرض"],["manage","قائد التنسيق"],["tech","مسؤول الجزء التقني"]]],
+    ["ما الذي يجعل شرحاً «ممتازاً» في نظرك؟", [["comm","واضح ويصل للجميع"],["anal","منطقي ومبني على أدلة"],["design","مدعوم بأشكال ومخططات"],["creative","ممتع وغير تقليدي"]]],
+    ["لو طُلب منك تحسين تجربة التسجيل في الجامعة، بماذا تبدأ؟", [["design","رحلة الطالب من البداية للنهاية"],["manage","اختناقات الوقت والإجراءات"],["tech","الأتمتة وتقليل الورق"],["social","ملاحظات الطلاب الفعلية"]]],
+    ["أي جملة أقرب لطموحك؟", [["business","أبني شيئاً ينمو"],["design","أصنع أشياء يستخدمها الناس"],["social","أحدث فرقاً في حياة الآخرين"],["anal","أفهم العالم بشكل أعمق"]]],
+    ["عندما تراجع عملك قبل تسليمه، بماذا تهتم؟", [["anal","الدقة وصحة المعلومات"],["design","الشكل والترتيب"],["manage","اكتمال كل البنود"],["creative","أن يكون مميزاً عن المعتاد"]]],
+    ["ما نوع الورشات التي تحضرها بحماس؟", [["tech","ورش تقنية وتطبيقية"],["creative","ورش فن وكتابة وتصميم"],["comm","ورش خطابة وتواصل"],["social","ورش دعم نفسي أو مجتمعي"]]],
+    ["إذا كان لديك ميزانية صغيرة لمشروع، كيف تتصرف؟", [["business","أركز على أعلى عائد بأقل تكلفة"],["manage","أضع أولويات صارمة"],["design","أبسّط المنتج دون فقدان الجودة"],["creative","أبتكر حلولاً رخيصة ومبتكرة"]]],
+    ["أي جزء من كتابة تقرير تستمتع به؟", [["anal","التحليل والاستنتاج"],["comm","الصياغة والإقناع"],["design","الجداول والأشكال"],["manage","هيكلة الأقسام والتنظيم"]]],
+    ["ما الذي يدفعك لتجربة أداة أو برنامج جديد؟", [["tech","إمكانياته التقنية"],["design","سهولة الاستخدام والواجهة"],["business","هل يوفّر وقتاً أو مالاً"],["creative","هل يفتح أساليب تعبير جديدة"]]],
+    ["لو كنت مسؤولاً عن يوم مفتوح في الكلية، ماذا تخطط أولاً؟", [["manage","الجدول والمسؤوليات"],["comm","الترويج واستقبال الزوار"],["design","شكل المكان والمعرض"],["social","تجربة مريحة للزوار والطلاب"]]],
+    ["أي نوع من الأسئلة تحب أن تُطرح عليك؟", [["anal","أسئلة تحتاج تفكيراً عميقاً"],["creative","أسئلة مفتوحة بلا إجابة جاهزة"],["comm","أسئلة عن رأيك وتجربتك"],["business","أسئلة عن فرص وحلول عملية"]]],
+    ["ما الذي يجعل منتجاً رقمياً «ناجحًا» عندك؟", [["design","تجربة سلسة ومريحة"],["tech","أداء مستقر وحلول ذكية"],["business","يحل مشكلة حقيقية لناس كثر"],["social","يراعي احتياجات المستخدمين"]]],
+    ["إذا ساعدت في إعداد مجلة طلابية، أي قسم تختار؟", [["creative","التصميم أو المحتوى الإبداعي"],["comm","المقابلات والتحرير"],["anal","الملف العلمي أو التحقيقات"],["manage","التنسيق والنشر"]]],
+    ["كيف تفضّل تلقي الملاحظات على عملك؟", [["anal","ملاحظات محددة ومبنية على أمثلة"],["design","ملاحظات عن الشكل والتجربة"],["social","بأسلوب محترم وداعم"],["manage","مرتبة حسب الأولوية"]]],
+    ["أي مشروع يثير حماسك أكثر للمستقبل؟", [["tech","ابتكار تقني يسهّل حياة الناس"],["design","تصميم يغيّر تجربة يومية"],["social","مبادرة تحسّن واقعاً اجتماعياً"],["business","مشروع يخلق فرص عمل"]]],
+    ["عندما تبدأ يوماً مليئاً بالمهام، ماذا تفعل أولاً؟", [["manage","أحدّد الأولويات وأرتّب القائمة"],["anal","أراجع ما يحتاج تركيزاً عالياً"],["business","أبدأ بما يحقق أكبر أثر"],["creative","أبدأ بما يلهمني لأدخل في الجو"]]],
+    ["ما الذي تتذكره أكثر بعد مشاهدة عرض تقديمي؟", [["comm","أسلوب المتحدث وقصته"],["design","الصور والمخططات"],["anal","الأرقام والحجج"],["creative","الفكرة غير التقليدية"]]],
+    ["لو صمّمت مساحة دراسة مشتركة، ما الأولوية؟", [["design","الراحة البصرية والوظيفية"],["social","أماكن للنقاش والهدوء معاً"],["manage","قواعد استخدام واضحة"],["tech","توفر شواحن وشبكة جيدة"]]],
+    ["أي مهارة تود أن يُعرف بها اسمك بين زملائك؟", [["anal","الدقة والفهم العميق"],["design","الذوق وحسن التنفيذ"],["comm","القدرة على الشرح والإقناع"],["social","الوقوف مع الآخرين"]]],
+    ["إذا كان لديك فكرة لتطبيق جامعي ورفضها البعض، ماذا تفعل؟", [["business","أختبر الفكرة على عينة صغيرة"],["anal","أجمع اعتراضاتهم وأحللها"],["creative","أعد صياغتها بشكل مختلف"],["comm","أشرح الفائدة بلغة أوضح"]]],
+    ["ما الذي يجعلك فخوراً بعمل أنجزته؟", [["design","عندما يبدو متقناً من كل زاوية"],["social","عندما يشكرك من استفاد منه"],["anal","عندما يصمد أمام المراجعة"],["business","عندما يحقق نتيجة ملموسة"]]],
+    ["أي نوع من القراءة تفضّل؟", [["anal","كتب علمية أو تحليلية"],["creative","قصص وروايات وأفكار"],["business","سير ذاتية وقصص نجاح"],["comm","حوارات ومقابلات"]]],
+    ["لو طُلب منك اختيار شعار لحياتك المهنية، أي عبارة؟", [["manage","النظام يصنع الإنجاز"],["creative","لا توجد فكرة واحدة صحيحة"],["social","الإنسان أولاً"],["tech","كل مشكلة لها حل"]]],
+    ["عندما ترى مشكلة في تصميم صف دراسي أو قاعة، بماذا تفكر؟", [["design","كيف أعيد ترتيب الفراغ"],["manage","كيف أنظّم الاستخدام"],["social","كيف يتأثر تركيز الطلاب"],["tech","هل التقنية المستخدمة مناسبة"]]],
+    ["ما الذي تستمتع به في الألعاب أو التطبيقات؟", [["tech","الآليات والتحديات"],["design","الواجهة والتجربة"],["creative","العوالم والقصص"],["business","أنظمة المكافآت والتقدم"]]],
+    ["إذا كنت عضواً في لجنة طلابية، أي ملف تختار؟", [["comm","الإعلام والعلاقات"],["manage","التنظيم والمتابعة"],["social","الدعم والخدمات الطلابية"],["design","الهوية البصرية والمواد"]]],
+    ["كيف تتعامل مع موضوع دراسي ممل بالنسبة لك؟", [["anal","أبحث عن منطقه الداخلي"],["creative","أربطه بفكرة أو مثال ممتع"],["manage","أقسّمه لمهام صغيرة"],["tech","أستخدم أدوات تساعد على التركيز"]]],
+    ["ما الذي يجعل فريقاً «قوياً» في نظرك؟", [["manage","وضوح الأدوار والالتزام"],["social","الثقة والدعم"],["comm","تواصل صادق"],["business","تركيز على هدف مشترك"]]],
+    ["لو صمّمت بطاقة تعريف شخصية (CV بصري)، بماذا تهتم؟", [["design","التخطيط والوضوح البصري"],["anal","دقة المعلومات"],["comm","أن يحكي قصة مقنعة"],["business","أن يبرز قيمتك العملية"]]],
+    ["أي نوع من النجاح يفرحك أكثر؟", [["social","مساعدة شخص تجاوز صعوبة"],["design","منتج يعمل ويُستخدم"],["anal","حل لغز كان معقّداً"],["business","فكرة تحولت إلى نتيجة"]]],
+    ["عندما تخطط لرحلة أو فعالية، ما أول خطوة؟", [["manage","الجدول والميزانية"],["design","تجربة المشاركين من البداية"],["social","من سيحضر وما يحتاجونه"],["business","هل الفكرة تستحق التكلفة"]]],
+    ["ما الذي يجذبك في التخصصات الهندسية؟", [["tech","حل المشكلات التقنية"],["design","تحويل الفكرة إلى بناء أو نظام"],["anal","الحسابات والنماذج"],["manage","إدارة المشاريع الهندسية"]]],
+    ["إذا كان لديك بودكاست طلابي، عن ماذا سيكون؟", [["comm","حوارات وتجارب طلاب"],["anal","شرح مفاهيم بشكل عميق"],["creative","قصص وأفكار غير تقليدية"],["social","قضايا تهم حياة الطلاب"]]],
+    ["أي عبارة تصف علاقتك بالوقت؟", [["manage","الوقت مورد يجب تنظيمه"],["creative","أفضل العمل عندما ألهم"],["business","أركّز على الوقت عالي العائد"],["anal","أحتاج وقتاً كافياً للفهم"]]],
+    ["لو طُلب منك تحسين كتاب جامعي، ماذا تفعل؟", [["design","تحسين الإخراج والرسوم"],["anal","توضيح المفاهيم الصعبة"],["comm","جعل اللغة أقرب للطالب"],["tech","إضافة عناصر تفاعلية رقمية"]]],
+    ["ما الذي يجعلك تختار تخصصاً دون آخر في اللحظة الأخيرة؟", [["social","مدى تأثيره على الناس"],["business","فرصه المستقبلية"],["design","إمكانية صنع أشياء ملموسة"],["anal","عمقه المعرفي"]]],
+    ["عندما ترى تصميماً ناجحاً، بماذا تمدحه أولاً؟", [["design","البساطة والوظيفة"],["creative","الابتكار"],["anal","التناسق المنطقي"],["comm","وضوح الرسالة"]]],
+    ["أي نشاط صباحي يهيّئك ليوم منتج؟", [["manage","مراجعة قائمة المهام"],["anal","قراءة شيء يعمّق تفكيري"],["creative","وقت حر للأفكار"],["social","حديث قصير مع شخص قريب"]]],
+    ["إذا فشلت مبادرة طلابية، ماذا تتعلم أولاً؟", [["anal","أين كان الخلل في الفرضيات"],["business","هل كانت الفرصة حقيقية"],["manage","هل كان التنفيذ منظّماً"],["social","هل فهمنا احتياج الناس"]]],
+    ["ما الذي تحب أن تتركه خلفك في نهاية السنة الدراسية؟", [["design","أعمال يمكن عرضها"],["social","علاقات ودعم متبادل"],["anal","فهم أعمق لمجالك"],["business","مشروع صغير نجح"]]],
+    ["أي نوع من الخرائط الذهنية تفضّل؟", [["anal","تسلسل منطقي صارم"],["creative","روابط حرة وصور"],["design","شكل مرتب بصرياً"],["manage","خطوات وإجراءات واضحة"]]],
+    ["لو اخترت بين العمل منفرداً أو ضمن فريق، متى تفضّل الفريق؟", [["social","عندما يحتاج العمل تعاطفاً وتنسيقاً"],["manage","عندما تتعدد المهام"],["comm","عندما يلزم إقناع جمهور"],["tech","عندما تتكامل مهارات تقنية مختلفة"]]],
+    ["ما الذي يجعل شرحاً تقنياً مفهوماً لغير المتخصصين؟", [["comm","أمثلة من الحياة اليومية"],["design","رسوم ومخططات بسيطة"],["anal","بناء الفكرة من الأساس"],["creative","قصة أو تشبيه ذكي"]]],
+    ["إذا كان لديك يوم بلا واجبات، كيف تقضيه؟", [["creative","أصنع شيئاً من لا شيء"],["tech","أتعلم أداة جديدة"],["social","ألتقي بناس أو أساعد"],["business","أشتغل على فكرة جانبية"]]],
+    ["أي معيار أهم عند تقييم تخصص؟", [["anal","مدى توافقه مع طريقة تفكيري"],["business","فرصه وسوق العمل"],["social","أثره الإنساني"],["design","إمكانية التطبيق العملي"]]],
+    ["عندما تقدّم عملاً جماعياً، بماذا تهتم في اللحظة الأخيرة؟", [["design","أن يبدو متناسقاً"],["manage","أن يكون مكتملاً حسب الخطة"],["comm","أن يُفهم العرض بسهولة"],["anal","أن تكون المعلومات صحيحة"]]],
+    ["ما الذي يثير فضولك في المستقبل القريب؟", [["tech","تقنيات جديدة"],["business","نماذج أعمال مبتكرة"],["social","طرق أفضل لدعم الناس"],["creative","أساليب تعبير جديدة"]]],
+    ["لو صمّمت صفحة رئيسية لموقع مساري، بماذا تبدأ؟", [["design","تجربة الزائر من أول ثانية"],["comm","الرسالة الأساسية بوضوح"],["tech","سرعة التحميل والأداء"],["business","دعوة واضحة لبدء الاختبار"]]],
+    ["أي جملة تختم بها نصيحتك لزميل محتار في التخصص؟", [["social","اختر ما يشبهك ويفيد الناس"],["anal","افهم نفسك قبل أن تختار"],["business","انظر للفرصة والاستمرار"],["creative","لا تخف من طريق غير تقليدي"]]]
+  ];
+
+const MAJOR_DETAILS = {
+    "رياضيات": ["يدرس الرياضيات النظرية والتطبيقية والمنطق وأساليب حل المشكلات وتحليل البيانات.","4 سنوات تقريباً",["التدريس","تحليل البيانات","البرمجة","البحث العلمي","القطاع المصرفي"]],
+    "صيدلة": ["يهتم بدراسة الأدوية وتركيبها وتأثيراتها واستخدامها الآمن، مع أساسيات العلوم الطبية والصيدلانية.","5 سنوات تقريباً",["الصيدليات","شركات الأدوية","المعامل الدوائية","المستشفيات","البحث الدوائي"]],
+    "هندسة البرمجيات": ["يركز على تحليل وتصميم وتطوير واختبار البرمجيات والأنظمة الرقمية.","تختلف حسب البرنامج؛ غالباً 4–5 سنوات",["مطور برمجيات","مطور تطبيقات","مطور مواقع","اختبار البرمجيات","محلل نظم"]],
+    "مخابر": ["مجال تقاني يرتبط بالتحاليل المخبرية وإجراءات أخذ العينات وفحصها وتوثيق النتائج.","تختلف حسب المعهد والبرنامج",["مخابر التحاليل","المشافي","المراكز الصحية","المختبرات الخاصة"]],
+    "علم النفس": ["يدرس السلوك والعمليات النفسية وطرق فهمها وتقييمها، مع أساليب الإرشاد والدعم.","4 سنوات تقريباً",["الإرشاد والدعم النفسي","المؤسسات التعليمية","المراكز الاجتماعية","البحث والدراسات"]],
+    "حقوق": ["يدرس القواعد القانونية وفروع القانون والعلاقات والحقوق والواجبات وتحليل النصوص القانونية.","4 سنوات تقريباً",["المحاماة بعد استيفاء المتطلبات","الشؤون القانونية","الإدارات والمؤسسات","البحث القانوني"]],
+    "إعلام": ["يتناول صناعة المحتوى الإعلامي وجمع المعلومات والتحرير والتقديم والإنتاج الإعلامي.","4 سنوات تقريباً للكلية؛ أقل في بعض المعاهد",["الصحافة","إعداد المحتوى","الإذاعة والتلفزيون","الإعلام الرقمي","العلاقات العامة"]],
+    "إدارة الأعمال": ["يركز على الإدارة والتسويق والموارد البشرية والعمليات واتخاذ القرار داخل المؤسسات والمشروعات.","تختلف حسب البرنامج؛ غالباً 4 سنوات للكلية وأقل في المعاهد",["إدارة الأعمال","التسويق","المبيعات","الموارد البشرية","إدارة المشاريع"]],
+    "هندسة البرمجيات ونظم المعلومات": ["يجمع بين تطوير البرمجيات وتحليل وتصميم نظم المعلومات وإدارة البيانات والأنظمة.","5 سنوات تقريباً",["مهندس برمجيات","محلل نظم","مطور تطبيقات","قواعد البيانات","إدارة نظم المعلومات"]],
+    "هندسة معمارية": ["تهتم بتصميم المباني والفراغات والعمران وتحويل المتطلبات إلى مخططات قابلة للتنفيذ.","5 سنوات تقريباً",["التصميم المعماري","المكاتب الهندسية","الإشراف على المشاريع","التصميم الداخلي","التخطيط العمراني"]],
+    "هندسة الشبكات": ["تختص ببناء وإدارة شبكات الحاسوب والاتصالات والخوادم وحماية البنية التحتية الرقمية.","تختلف حسب المعهد والبرنامج",["إدارة الشبكات","دعم الأنظمة","الشبكات والاتصالات","مراكز البيانات","أمن الشبكات"]],
+    "تحكم وأتمتة": ["يركز على أنظمة التحكم والأتمتة والحساسات والمتحكمات المستخدمة لتشغيل الآلات والعمليات.","تختلف حسب المعهد والبرنامج",["التحكم الصناعي","الأتمتة","الصيانة والتحكم","أنظمة التشغيل الصناعية"]],
+    "فنون جميلة": ["مجال إبداعي يطوّر المهارات الفنية في الرسم والتصوير والتصميم والفنون البصرية.","4–5 سنوات تقريباً حسب الاختصاص والبرنامج",["الفنون البصرية","التصميم","الرسم والتوضيح","العمل الحر","التدريس الفني وفق المؤهلات"]],
+    "تاريخ": ["يدرس تطور المجتمعات والأحداث والحضارات وتحليل المصادر التاريخية والسياقات الثقافية والاجتماعية.","4 سنوات تقريباً",["التعليم وفق المؤهلات","المتاحف والتراث","البحث العلمي","الأرشفة والتوثيق","المحتوى الثقافي"]],
+    "علاقات عامة": ["يركز على إدارة الاتصال بين المؤسسات وجمهورها وتنظيم الحملات والفعاليات والتواصل المؤسسي.","تختلف حسب البرنامج",["العلاقات العامة","تنظيم الفعاليات","الاتصال المؤسسي","إدارة المحتوى","التسويق"]],
+    "اقتصاد": ["يدرس الأسواق والموارد والقرارات الاقتصادية مع أدوات للتحليل المالي والاقتصادي.","4 سنوات تقريباً",["التحليل الاقتصادي","المصارف","الشركات","المؤسسات الحكومية","البحث والدراسات"]],
+    "هندسة مدنية": ["تهتم بتصميم وتنفيذ وإدارة مشاريع البناء والبنية التحتية كالطرق والمنشآت وشبكات المياه والصرف.","5 سنوات تقريباً",["المكاتب الهندسية","الإشراف على المشاريع","التنفيذ والإنشاء","إدارة المشاريع","البنية التحتية"]],
+    "محاسبة": ["تختص بتسجيل وتحليل العمليات المالية وإعداد التقارير ومتابعة الحسابات والرقابة المالية.","تختلف حسب البرنامج؛ غالباً 4 سنوات للكلية وأقل في المعاهد",["المحاسبة","التدقيق","الحسابات المالية","الشؤون المالية","المصارف والشركات"]],
+    "علم النفس السريري": ["يركز على فهم وتقييم المشكلات والاضطرابات النفسية وأساليب التدخل ضمن الإطار المهني المعتمد.","تختلف حسب البرنامج والمرحلة الدراسية",["الدعم والتقييم النفسي ضمن الاختصاص","المراكز الصحية والاجتماعية","المؤسسات التعليمية","البحث النفسي"]],
+    "تمريض": ["يدرس الرعاية التمريضية للمريض وتقييم حالته وتنفيذ خطط الرعاية والتعاون مع الفريق الصحي.","4 سنوات تقريباً للبرنامج الجامعي",["المستشفيات","المراكز الصحية","العيادات","الرعاية الصحية"]],
+    "معالجة فيزيائية": ["يهتم بتقييم الحركة والوظائف الجسدية والمساعدة في إعادة التأهيل باستخدام تمارين وتقنيات علاجية.","تختلف حسب البرنامج",["مراكز العلاج الفيزيائي","المستشفيات","مراكز التأهيل","العيادات"]],
+    "إرشاد نفسي": ["يركز على مساعدة الأفراد في التعامل مع التحديات الشخصية والدراسية والاجتماعية بأساليب الإرشاد المناسبة.","تختلف حسب البرنامج",["الإرشاد التربوي","المدارس والمؤسسات التعليمية","المراكز الاجتماعية","الدعم والإرشاد"]],
+    "المناهج وطرائق التدريس": ["يهتم بتصميم المناهج التعليمية وتطويرها ودراسة طرائق التدريس وتقويم التعلم.","4 سنوات تقريباً",["التدريس وفق المؤهلات","تطوير المناهج","التدريب التربوي","المؤسسات التعليمية"]],
+    "علم الاجتماع": ["يدرس المجتمع والعلاقات والمؤسسات والظواهر الاجتماعية وأدوات البحث الاجتماعي.","4 سنوات تقريباً",["البحث الاجتماعي","المؤسسات الاجتماعية","المشاريع المجتمعية","الدراسات والاستبيانات","القطاع الأهلي"]],
+    "تسويق ومبيعات": ["يركز على فهم السوق والعملاء وتسويق المنتجات والخدمات وإدارة المبيعات.","تختلف حسب المعهد والبرنامج",["التسويق","المبيعات","خدمة العملاء","التسويق الرقمي","تطوير الأعمال"]],
+    "الإعلام الإلكتروني": ["يركز على إنتاج المحتوى للمنصات الرقمية وإدارة النشر الإلكتروني والوسائط المتعددة.","4 سنوات تقريباً",["الإعلام الرقمي","إدارة المحتوى","التحرير الإلكتروني","إدارة المنصات","صناعة المحتوى"]],
+    "اللغة العربية وآدابها": ["يدرس اللغة العربية وعلومها وآدابها، من النحو والصرف والبلاغة إلى الأدب وتحليل النصوص.","4 سنوات تقريباً",["التدريس وفق المؤهلات","التحرير اللغوي","الكتابة والمحتوى","البحث الأدبي","الصحافة والمحتوى"]],
+    "فلسفة": ["تبحث في قضايا المعرفة والمنطق والأخلاق والفكر وتدرب على التحليل النقدي وبناء الحجج.","4 سنوات تقريباً",["التعليم وفق المؤهلات","البحث والدراسات","الكتابة والتحرير","المحتوى الثقافي"]]
+  };
+
+
+  const STUDY_TIPS = {
+    anal: "حدّد مفهوماً واحداً كل يوم وافهمه بعمق قبل الانتقال إلى غيره. التلخيص بيدك بعد كل محاضرة يثبّت المعلومات أكثر من القراءة المتكررة وحدها.",
+    design: "اربط كل درس بمشروع صغير تطبّق عليه. المهارة تُبنى بالصنع المتكرر أكثر من الحفظ، وراجع أعمالك القديمة لترى تطوّرك.",
+    comm: "تمرّن على شرح الفكرة بصوت عالٍ لزميل أو لنفسك. كلّما صار شرحك أبسط، صار فهمك أقوى.",
+    manage: "قسّم أسبوعك إلى مهام قصيرة بمواعيد واضحة. التنظيم اليومي يوفّر وقتاً أكثر من المذاكرة العشوائية الطويلة.",
+    social: "ادرس ضمن مجموعة صغيرة داعمة، وعلّم غيرك ما فهمته. التعليم يعزّز حفظك ويفتح زوايا جديدة للموضوع.",
+    tech: "طبّق كل فكرة جديدة بتمرين عملي فوري، حتى لو كان بسيطاً. الخطأ جزء من التعلّم في المجالات التقنية، فلا تؤجّل التجريب.",
+    business: "اربط المفاهيم بأمثلة من السوق أو بمشاريع حقيقية حولك. الفهم التطبيقي يساعدك على التذكّر واتخاذ قرارات أوضح.",
+    creative: "اجمع أفكارك في دفتر أو ملف واحد، وخصّص وقتاً أسبوعياً للتجريب الحر بلا ضغط علامة. الإبداع يحتاج مساحة منتظمة.",
+    default: "اجمع بين الفهم والممارسة: راجع بإيجاز، طبّق بتمرين قصير، ثم علّم الفكرة لشخص آخر. هذه الثلاث تثبّت المادة بقوة."
+  };
+
+  const QUESTION_COUNT = 12;
+  const LS_KEY = "masari_demo_v3";
+  const THEME_KEY = "masari_theme";
+  let answers = [];
+  let idx = 0;
+  let activeQuestions = [];
+  let skipUsed = 0;
+
+  const questionsEl = document.getElementById("questions");
+  const bar = document.getElementById("bar");
+  const qCounter = document.getElementById("qCounter");
+  const nextBtn = document.getElementById("nextBtn");
+  const backBtn = document.getElementById("backBtn");
+  const skipBtn = document.getElementById("skipBtn");
+  const resultBox = document.getElementById("resultBox");
+  const topResult = document.getElementById("topResult");
+  const typeLabel = document.getElementById("typeLabel");
+  const confidenceLabel = document.getElementById("confidenceLabel");
+  const majorsList = document.getElementById("majorsList");
+  const adviceText = document.getElementById("adviceText");
+  const restartBtn = document.getElementById("restartBtn");
+  const shareBtn = document.getElementById("shareBtn");
+  const copyTextBtn = document.getElementById("copyTextBtn");
+  const navActions = document.getElementById("navActions");
+  const titleBar = document.getElementById("titleBar");
+  const introScreen = document.getElementById("introScreen");
+  const quizContent = document.getElementById("quizContent");
+  const startBtn = document.getElementById("startBtn");
+  const savedHint = document.getElementById("savedHint");
+  const themeBtn = document.getElementById("themeBtn");
+  const toastWrap = document.getElementById("toastWrap");
+
+  function toast(msg, isError){
+    const el = document.createElement("div");
+    el.className = "toast" + (isError ? " error" : "");
+    el.textContent = msg;
+    toastWrap.appendChild(el);
+    setTimeout(() => { el.style.opacity = "0"; el.style.transition = "opacity .3s"; setTimeout(() => el.remove(), 300); }, 2800);
+  }
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function buildQuiz(savedState = null){
+    const isValidSavedQuestions = Array.isArray(savedState?.activeQuestions) &&
+      savedState.activeQuestions.length === QUESTION_COUNT &&
+      savedState.activeQuestions.every(q => q && typeof q.text === "string" && Array.isArray(q.options) &&
+        q.options.length > 0 && q.options.every(o => Array.isArray(o) && o.length >= 2 && TRACKS[o[0]]));
+
+    if(isValidSavedQuestions){
+      activeQuestions = savedState.activeQuestions;
+      answers = Array.isArray(savedState.answers) && savedState.answers.length === QUESTION_COUNT
+        ? savedState.answers.map(v => (typeof v === "string" && (v === "" || TRACKS[v])) ? v : "")
+        : Array(QUESTION_COUNT).fill("");
+      idx = Number.isInteger(savedState.idx) ? Math.min(Math.max(savedState.idx, 0), QUESTION_COUNT - 1) : 0;
+      skipUsed = Number.isInteger(savedState.skipUsed) ? Math.min(Math.max(savedState.skipUsed, 0), 2) : 0;
+    } else {
+      const candidates = shuffle(QUESTION_BANK);
+      const selected = [];
+      const covered = new Set();
+      for(const q of candidates){
+        const tracks = q[1].map(x => x[0]);
+        if(tracks.some(t => !covered.has(t))){
+          selected.push(q);
+          tracks.forEach(t => covered.add(t));
+        }
+        if(selected.length >= QUESTION_COUNT) break;
+      }
+      for(const q of candidates){
+        if(selected.length >= QUESTION_COUNT) break;
+        if(!selected.includes(q)) selected.push(q);
+      }
+      activeQuestions = shuffle(selected.slice(0, QUESTION_COUNT)).map(q => ({
+        text: q[0],
+        options: shuffle(q[1])
+      }));
+      answers = Array(QUESTION_COUNT).fill("");
+      idx = 0;
+      skipUsed = 0;
+    }
+
+    questionsEl.innerHTML = activeQuestions.map((q,i) => `
+      <div class="q ${i===idx?'active':''}" data-q="${i}">
+        <h4>${q.text}</h4>
+        <div class="options">
+          ${q.options.map(o => `<button class="opt" type="button" data-val="${o[0]}" aria-pressed="false">${o[1]}</button>`).join('')}
+        </div>
+      </div>
+    `).join('');
+    questionsEl.querySelectorAll('.opt').forEach(opt => {
+      opt.addEventListener('click', () => selectOption(opt.getAttribute('data-val')));
+    });
+    updateUI();
+  }
+
+  function readSavedProgress(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw) return null;
+      const saved = JSON.parse(raw);
+      if(!saved || !Array.isArray(saved.activeQuestions) || saved.activeQuestions.length !== QUESTION_COUNT) return null;
+      return saved;
+    }catch(e){ return null; }
+  }
+
+  function clearSavedProgress(){
+    try { localStorage.removeItem(LS_KEY); } catch(e){}
+  }
+
+  async function hitCounter(){
+    const el = document.getElementById("visitCount");
+    if(!el) return;
+    try {
+      const r = await fetch("https://counterapi.com/api/masari-demo-2026/view/total-visits", {cache:"no-store"});
+      if(r.ok){
+        const d = await r.json();
+        if(d && typeof d.value === "number"){
+          el.textContent = d.value.toLocaleString("ar-EG");
+          try { localStorage.setItem("masari_visit_cache", String(d.value)); } catch(e){}
+          return;
+        }
+      }
+    } catch(e){}
+    // عند تعذر الخدمة الخارجية، نعرض آخر قيمة موثوقة محفوظة بدل إنشاء عداد محلي يوحي بأنه عداد عام.
+    try {
+      const cached = localStorage.getItem("masari_visit_cache");
+      el.textContent = cached && Number.isFinite(Number(cached)) ? Number(cached).toLocaleString("ar-EG") : "—";
+    } catch(e){
+      el.textContent = "—";
+    }
+  }
+
+  function persist(){
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        answers, activeQuestions, idx, skipUsed, savedAt: Date.now()
+      }));
+    } catch(e){}
+  }
+
+  function flashSaved(){
+    if(!savedHint) return;
+    savedHint.classList.add("show");
+    clearTimeout(flashSaved._t);
+    flashSaved._t = setTimeout(() => savedHint.classList.remove("show"), 1600);
+  }
+
+  function updateUI(){
+    const qEls = [...questionsEl.querySelectorAll('.q')];
+    qEls.forEach((el, i) => el.classList.toggle('active', i === idx));
+    bar.style.width = ((idx / QUESTION_COUNT) * 100) + "%";
+    qCounter.textContent = "السؤال " + (idx + 1) + " من " + QUESTION_COUNT;
+    backBtn.disabled = idx === 0;
+    nextBtn.textContent = idx === QUESTION_COUNT - 1 ? "اعرض نتيجتي" : "التالي";
+    skipBtn.disabled = skipUsed >= 2 || !!answers[idx];
+    const currentQ = qEls[idx];
+    if(!currentQ) return;
+    const selectedVal = answers[idx];
+    currentQ.querySelectorAll('.opt').forEach(opt => {
+      const selected = opt.getAttribute('data-val') === selectedVal;
+      opt.classList.toggle('selected', selected);
+      opt.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    });
+  }
+
+  function selectOption(val){
+    answers[idx] = val;
+    persist();
+    flashSaved();
+    updateUI();
+  }
+
+  function computeResult(){
+    const keys = Object.keys(TRACKS);
+    const scores = Object.fromEntries(keys.map(k => [k,0]));
+    const opportunities = Object.fromEntries(keys.map(k => [k,0]));
+    activeQuestions.forEach(q => {
+      q.options.forEach(o => {
+        if(opportunities[o[0]] !== undefined) opportunities[o[0]]++;
+      });
+    });
+    answers.forEach(a => {
+      if(a && scores[a] !== undefined) scores[a]++;
+    });
+    const percentages = Object.fromEntries(keys.map(k => [
+      k,
+      opportunities[k] ? Math.round(18 + ((scores[k] / opportunities[k]) * 100) * 0.55) : 18
+    ]));
+    const ranking = shuffle(keys).sort((a,b) => percentages[b] - percentages[a]);
+    const top = percentages[ranking[0]];
+    const second = percentages[ranking[1]] || 0;
+    const gap = top - second;
+    let confidence = "نتيجتك متقاربة بين أكثر من مسار — يُفضَّل أن تستكشف التخصصات في أكثر من مجال.";
+    if(gap >= 18) confidence = "نتيجتك واضحة نسبياً — المسار الظاهر يناسب اهتماماتك بقوة.";
+    else if(gap >= 10) confidence = "نتيجتك واضحة نسبيًا — يظهر فيها تفوق لمسار مع وجود تداخل بسيط مع مسار آخر.";
+    return { best: ranking[0], percentages, ranking, confidence, gap };
+  }
+
+  function cleanMajorName(name){return String(name||'').replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').replace(/\s+/g,' ').trim();}
+  let currentMajorItems = [];
+  let majorModalBound = false;
+
+  function majorKey(name){
+    return cleanMajorName(name).replace(/[–—-]/g,' ').replace(/\s+/g,' ').trim().toLocaleLowerCase('ar');
+  }
+  function uniquePool(pool){
+    const seen = new Set();
+    return (pool || []).filter(item => {
+      const key = `${majorKey(item.name)}|${item.university}|${item.kind}`;
+      if(!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+  function fieldOf(item){
+    const n = cleanMajorName(item.name);
+    if(/برمجيات|شبكات|تحكم|هندسة/.test(n)) return 'تقني-هندسي';
+    if(/إعلام|علاقات عامة|لغة عربية|فلسفة|تاريخ|إعلام إلكتروني/.test(n)) return 'إعلام-إنساني';
+    if(/اقتصاد|إدارة الأعمال|محاسبة|تسويق/.test(n)) return 'إداري-اقتصادي';
+    if(/نفس|تمريض|معالجة|مخابر/.test(n)) return 'صحي-إنساني';
+    if(/فنون/.test(n)) return 'فني-إبداعي';
+    if(/رياضيات/.test(n)) return 'علمي';
+    if(/حقوق/.test(n)) return 'قانوني';
+    if(/مناهج/.test(n)) return 'تربوي';
+    return 'متنوع';
+  }
+  function bindMajorDetails(items){
+    currentMajorItems = items || [];
+    const modal=document.getElementById('majorModal');
+    const title=document.getElementById('majorModalTitle');
+    const sub=document.getElementById('majorModalSub');
+    const summary=document.getElementById('majorModalSummary');
+    const duration=document.getElementById('majorModalDuration');
+    const jobs=document.getElementById('majorModalJobs');
+    const modalClose=document.getElementById('majorModalClose');
+    let lastMajorTrigger=null;
+    const close=()=>{
+      modal.classList.remove('active');
+      modal.style.display='none';
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      if(lastMajorTrigger && document.contains(lastMajorTrigger)) lastMajorTrigger.focus({preventScroll:true});
+    };
+    if(majorModalBound) return;
+    majorModalBound=true;
+    majorsList.addEventListener('click',(e)=>{
+      const btn=e.target.closest('[data-major-index]');
+      if(!btn || !majorsList.contains(btn)) return;
+      const item=currentMajorItems[Number(btn.dataset.majorIndex)];
+      if(!item) return;
+      const key=cleanMajorName(item.name);
+      const d=MAJOR_DETAILS[key]||['هذا الاختصاص يقدّم دراسة متخصصة في المجال المرتبط به، ويجمع بين المعرفة النظرية والتطبيق العملي بحسب البرنامج.','تختلف حسب البرنامج',['مؤسسات وشركات مرتبطة بالمجال','العمل الحر','البحث أو التدريب وفق المؤهلات']];
+      title.textContent=key;
+      sub.textContent=item.kind || '';
+      summary.textContent=d[0];
+      duration.textContent=d[1];
+      jobs.innerHTML=d[2].map(j=>`<span class="major-job">${j}</span>`).join('');
+      lastMajorTrigger=btn;
+      modal.classList.add('active');
+      modal.style.display='flex';
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      requestAnimationFrame(()=>modalClose.focus({preventScroll:true}));
+    });
+    modalClose.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();close();});
+    modal.addEventListener('click',(e)=>{if(e.target===modal) close();});
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape' && modal.classList.contains('active')) close();});
+  }
+
+  function showResult(){
+    const answered = answers.filter(a => a).length;
+    if(answered < QUESTION_COUNT - skipUsed){
+      toast("أجب عن الأسئلة المتبقية، أو استخدم التخطي (مرتين كحد أقصى).", true);
+      return;
+    }
+    const result = computeResult();
+    clearSavedProgress();
+    const best = result.best;
+    const t = TRACKS[best];
+    topResult.textContent = t.title;
+    typeLabel.textContent = t.type;
+    confidenceLabel.textContent = result.confidence;
+
+    const combinations = (arr, count) => {
+      const out = [];
+      const walk = (startIndex, picked) => {
+        if(picked.length === count){ out.push([...picked]); return; }
+        for(let i=startIndex; i<=arr.length-(count-picked.length); i++){
+          picked.push(arr[i]);
+          walk(i+1, picked);
+          picked.pop();
+        }
+      };
+      walk(0, []);
+      return out;
+    };
+    const scientificOptions = combinations(shuffle(uniquePool(t.majors?.scientific)), 2);
+    const literaryOptions = combinations(shuffle(uniquePool(t.majors?.literary)), 2);
+    const validSets = [];
+    for(const scientific of scientificOptions){
+      for(const literary of literaryOptions){
+        const all = [...scientific, ...literary];
+        const names = all.map(x => majorKey(x.name));
+        if(new Set(names).size !== 4) continue;
+        const universities = all.map(x => x.university);
+        if(!universities.includes('جامعة حلب') || !universities.includes('جامعة دمشق')) continue;
+        const fields = new Set(all.map(fieldOf));
+        const kinds = new Set(all.map(x => x.kind));
+        const universityCounts = {
+          'جامعة حلب': universities.filter(u => u === 'جامعة حلب').length,
+          'جامعة دمشق': universities.filter(u => u === 'جامعة دمشق').length
+        };
+        const balance = Math.min(universityCounts['جامعة حلب'], universityCounts['جامعة دمشق']);
+        const score = (fields.size * 6) + (kinds.size * 2) + (balance * 4) + Math.random() * 0.2;
+        validSets.push({scientific, literary, score});
+      }
+    }
+    validSets.sort((a,b) => b.score - a.score);
+    const selectedSet = validSets[0] || null;
+    let suggestedMajors = selectedSet
+      ? [...selectedSet.scientific, ...selectedSet.literary]
+      : [...shuffle(uniquePool(t.majors?.scientific)).slice(0,2), ...shuffle(uniquePool(t.majors?.literary)).slice(0,2)];
+    suggestedMajors = suggestedMajors.slice(0, 4);
+    majorsList.innerHTML = suggestedMajors.map((m, i) => `
+      <button class="major" type="button" data-major-index="${i}" aria-label="${cleanMajorName(m.name)} - ${m.kind}">
+        <div>
+          <div class="major-name">${m.name}</div>
+          <div class="major-meta">${m.kind} · اضغط للتفاصيل</div>
+        </div>
+      </button>
+    `).join("");
+    bindMajorDetails(suggestedMajors);
+    adviceText.textContent = t.advice;
+    const tipEl = document.getElementById("studyTipText");
+    if(tipEl) tipEl.textContent = STUDY_TIPS[best] || STUDY_TIPS.default;
+
+    const scoresEl = document.getElementById("scoresList");
+    if(scoresEl){
+      scoresEl.innerHTML = result.ranking.map(k => {
+        const pct = result.percentages[k];
+        return `
+          <div class="score-row" data-pct="${pct}">
+            <div class="score-head">
+              <span class="score-name">${TRACKS[k].title}</span>
+              <span class="score-pct">0%</span>
+            </div>
+            <div class="score-track" aria-hidden="true">
+              <div class="score-fill" style="width:0%"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+      requestAnimationFrame(() => {
+        scoresEl.querySelectorAll('.score-row').forEach(row => {
+          const pctEl = row.querySelector('.score-pct');
+          const fillEl = row.querySelector('.score-fill');
+          const target = Number(row.dataset.pct || 0);
+          if(!pctEl || !fillEl) return;
+          const start = performance.now();
+          const duration = 850;
+          const tick = now => {
+            const progress = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            pctEl.textContent = Math.round(target * eased) + '%';
+            fillEl.style.width = Math.round(target * eased) + '%';
+            if(progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      });
+    }
+
+    bar.style.width = "100%";
+    resultBox.classList.add("active");
+    resultBox.focus({preventScroll:true});
+    questionsEl.classList.add("hidden");
+    navActions.classList.add("hidden");
+    titleBar.classList.add("hidden");
+    if(savedHint) savedHint.classList.remove("show");
+    persist();
+    toast("نتيجتك جاهزة 🎉");
+  }
+
+  nextBtn.addEventListener("click", () => {
+    if(idx < QUESTION_COUNT - 1){
+      if(!answers[idx]){ toast("اختر إجابة أولاً، أو اضغط «تخطي».", true); return; }
+      idx++;
+      persist();
+      updateUI();
+    } else {
+      showResult();
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    if(idx > 0){ idx--; persist(); updateUI(); }
+  });
+
+  skipBtn.addEventListener("click", () => {
+    if(skipUsed >= 2){ toast("يمكنك تخطي سؤالين فقط في كل اختبار.", true); return; }
+    if(answers[idx]) return;
+    answers[idx] = ""; // leave empty
+    skipUsed++;
+    persist();
+    if(idx < QUESTION_COUNT - 1){
+      idx++;
+      updateUI();
+      toast("تم تخطي السؤال (" + skipUsed + "/2)");
+    } else {
+      showResult();
+    }
+  });
+
+  function canvasRoundRect(ctx, x, y, w, h, r){
+    const rr = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+rr,y);
+    ctx.arcTo(x+w,y,x+w,y+h,rr);
+    ctx.arcTo(x+w,y+h,x,y+h,rr);
+    ctx.arcTo(x,y+h,x,y,rr);
+    ctx.arcTo(x,y,x+w,y,rr);
+    ctx.closePath();
+  }
+  function canvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines=3){
+    text = String(text || '').trim();
+    if(!text) return y;
+    const words = text.split(/\s+/);
+    const lines = [];
+    let line = '';
+    for(const word of words){
+      const test = line ? line + ' ' + word : word;
+      if(ctx.measureText(test).width <= maxWidth || !line){
+        line = test;
+      }else{
+        lines.push(line);
+        line = word;
+        if(lines.length === maxLines-1) break;
+      }
+    }
+    if(line && lines.length < maxLines) lines.push(line);
+    if(lines.length && words.length > 0){
+      const used = lines.join(' ').split(/\s+/).filter(Boolean).length;
+      if(used < words.length) lines[lines.length-1] += '…';
+    }
+    lines.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lineHeight));
+    return y + lines.length*lineHeight;
+  }
+  function loadShareImage(src){
+    return new Promise((resolve,reject)=>{
+      const img = new Image();
+      img.onload = ()=>resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  async function buildResultImage(){
+    const scale = 2;
+    const W = 1080, H = 1480;
+    const canvas = document.createElement('canvas');
+    canvas.width = W*scale; canvas.height = H*scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale,scale);
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'alphabetic';
+
+    // Background
+    const bg = ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#ffffff');
+    bg.addColorStop(0.55,'#f7fbf9');
+    bg.addColorStop(1,'#eef6f2');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+    // Soft decor circles
+    ctx.fillStyle = 'rgba(23,107,92,.05)'; ctx.beginPath(); ctx.arc(90,110,160,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(47,158,123,.04)'; ctx.beginPath(); ctx.arc(1000,1280,200,0,Math.PI*2); ctx.fill();
+
+    // Logos
+    const [masariLogo, unionLogo] = await Promise.all([
+      loadShareImage(EMBEDDED_LOGO),
+      loadShareImage(UNION_WIDE)
+    ]);
+    // رسم الشعارات بنسبة أبعادها الأصلية لتفادي التمطيط
+    const drawLogo = (img, boxX, boxY, maxW, maxH, align) => {
+      const iw = img.naturalWidth || img.width || 1;
+      const ih = img.naturalHeight || img.height || 1;
+      const s = Math.min(maxW / iw, maxH / ih);
+      const w = iw * s;
+      const h = ih * s;
+      let x = boxX;
+      if(align === 'right') x = boxX + maxW - w;
+      else if(align === 'center') x = boxX + (maxW - w) / 2;
+      const y = boxY + (maxH - h) / 2;
+      ctx.drawImage(img, x, y, w, h);
+    };
+    const logoY = 28;
+    drawLogo(unionLogo, 56, logoY, 280, 72, 'left');
+    drawLogo(masariLogo, 760, logoY, 240, 72, 'right');
+
+    // Divider under logos
+    ctx.strokeStyle = '#d5e5df'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(56, 120); ctx.lineTo(1024, 120); ctx.stroke();
+
+    // Title
+    ctx.fillStyle = '#176b5c';
+    ctx.font = '800 44px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('نتيجتك في مساري', 1024, 175);
+    ctx.fillStyle = '#6a7f7a';
+    ctx.font = '600 22px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('اكتشف اهتماماتك، واختر مستقبلك', 1024, 210);
+
+    // Path card
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowColor = 'rgba(18,63,59,.08)'; ctx.shadowBlur = 20; ctx.shadowOffsetY = 6;
+    canvasRoundRect(ctx, 56, 240, 968, 150, 24); ctx.fill();
+    ctx.shadowColor = 'transparent';
+
+    ctx.fillStyle = '#e8f6f0';
+    canvasRoundRect(ctx, 780, 258, 220, 42, 14); ctx.fill();
+    ctx.fillStyle = '#176b5c';
+    ctx.font = '800 20px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('المسار الأقرب', 970, 286);
+
+    ctx.fillStyle = '#123f3b';
+    ctx.font = '900 36px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    canvasText(ctx, topResult.textContent.trim(), 1000, 340, 880, 42, 1);
+    ctx.fillStyle = '#667b77';
+    ctx.font = '600 22px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    canvasText(ctx, typeLabel.textContent.trim(), 1000, 375, 880, 28, 1);
+
+    // Majors section
+    ctx.fillStyle = '#123f3b';
+    ctx.font = '800 28px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('التخصصات المقترحة', 1024, 440);
+
+    const majors = [...majorsList.querySelectorAll('.major-name')].map(el => el.textContent.trim()).filter(Boolean);
+    const majorMetas = [...majorsList.querySelectorAll('.major-meta')].map(el => el.textContent.replace('· اضغط للتفاصيل','').trim());
+    majors.slice(0,4).forEach((major,i)=>{
+      const y = 460 + i * 70;
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(18,63,59,.06)'; ctx.shadowBlur = 12; ctx.shadowOffsetY = 3;
+      canvasRoundRect(ctx, 56, y, 968, 58, 16); ctx.fill();
+      ctx.shadowColor = 'transparent';
+
+      // number badge
+      ctx.fillStyle = '#e8f6f0';
+      canvasRoundRect(ctx, 950, y + 12, 54, 34, 10); ctx.fill();
+      ctx.fillStyle = '#176b5c';
+      ctx.font = '800 20px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+      ctx.fillText(String(i+1), 980, y + 36);
+
+      ctx.fillStyle = '#183f3c';
+      ctx.font = '700 24px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+      ctx.fillText(major, 930, y + 28);
+
+      const meta = majorMetas[i] || '';
+      if(meta){
+        ctx.fillStyle = '#7a8f8a';
+        ctx.font = '600 16px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+        ctx.fillText(meta, 930, y + 48);
+      }
+    });
+
+    // Study tip box
+    const tipY = 460 + 4 * 70 + 24;
+    ctx.fillStyle = '#f3faf7';
+    canvasRoundRect(ctx, 56, tipY, 968, 120, 18); ctx.fill();
+    ctx.strokeStyle = '#cfe8df'; ctx.lineWidth = 2;
+    canvasRoundRect(ctx, 56, tipY, 968, 120, 18); ctx.stroke();
+
+    ctx.fillStyle = '#176b5c';
+    ctx.font = '800 22px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('💡 نصيحة للدراسة', 1000, tipY + 36);
+
+    const tipText = (document.getElementById('studyTipText')?.textContent || '').trim()
+      || 'اجمع بين الفهم والممارسة، وراجع بإيجاز ثم طبّق بتمرين قصير.';
+    ctx.fillStyle = '#405955';
+    ctx.font = '600 20px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    canvasText(ctx, tipText, 1000, tipY + 68, 900, 28, 2);
+
+    // Scores (top 4 only for cleaner layout)
+    const scoresEl = document.getElementById("scoresList");
+    const scoreRows = [...(scoresEl?.querySelectorAll('.score-row') || [])].slice(0, 4);
+    const scoresY = tipY + 150;
+    ctx.fillStyle = '#123f3b';
+    ctx.font = '800 26px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.fillText('مؤشرات التوافق', 1024, scoresY);
+
+    scoreRows.forEach((row,i)=>{
+      const y = scoresY + 20 + i * 42;
+      const name = row.querySelector('.score-name')?.textContent.trim() || '';
+      const pct = row.dataset.pct || row.querySelector('.score-pct')?.textContent.replace('%','') || '0';
+      const n = Math.max(0, Math.min(100, Number(pct)||0));
+
+      ctx.fillStyle = '#5f746f';
+      ctx.font = '600 18px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+      ctx.fillText(name, 1024, y + 16);
+
+      ctx.fillStyle = '#e5eeea';
+      canvasRoundRect(ctx, 380, y, 420, 16, 8); ctx.fill();
+      ctx.fillStyle = '#2f9e7b';
+      canvasRoundRect(ctx, 380, y, Math.max(8, 420 * n / 100), 16, 8); ctx.fill();
+
+      ctx.fillStyle = '#176b5c';
+      ctx.font = '800 18px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+      ctx.fillText(n + '%', 360, y + 14);
+    });
+
+    // Confidence near bottom
+    const confText = (document.getElementById('confidenceLabel')?.textContent || '').trim();
+    const confY = scoresY + 20 + scoreRows.length * 42 + 28;
+    if(confText){
+      ctx.fillStyle = '#eef7f3';
+      canvasRoundRect(ctx, 56, confY, 968, 56, 14); ctx.fill();
+      ctx.fillStyle = '#28665a';
+      ctx.font = '700 18px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+      canvasText(ctx, confText, 1000, confY + 34, 900, 24, 1);
+    }
+
+    // Footer
+    ctx.strokeStyle = '#d5e5df'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(56, H - 90); ctx.lineTo(1024, H - 90); ctx.stroke();
+
+    ctx.fillStyle = '#6a7f7a';
+    ctx.font = '600 17px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    canvasText(ctx, 'نتيجة استرشادية، وليست حكماً نهائياً بشأن التخصص المناسب لك.', 1024, H - 55, 700, 24, 1);
+
+    ctx.fillStyle = '#176b5c';
+    ctx.font = '800 18px system-ui, -apple-system, Segoe UI, Arial, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('مساري • منصة استرشادية', 56, H - 30);
+    ctx.textAlign = 'right';
+
+    return new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
+  }
+
+  async function shareResult(){
+    if(!topResult.textContent.trim() || topResult.textContent.trim()==='—'){
+      toast('اعرض النتيجة أولاً ثم شاركها.', true); return;
+    }
+    const original=shareBtn.textContent;
+    shareBtn.disabled=true; shareBtn.textContent='جارٍ تجهيز الصورة…';
+    try{
+      const blob=await buildResultImage();
+      if(!blob) throw new Error('image');
+      const file=new File([blob],'masari-result.png',{type:'image/png'});
+      if(navigator.share){
+        try{
+          if(!navigator.canShare || navigator.canShare({files:[file]})){
+            await navigator.share({title:'نتيجتي في مساري',text:'نتيجتي في اختبار مساري',files:[file]});
+            toast('تمت المشاركة');
+            return;
+          }
+        }catch(e){
+          if(e && e.name==='AbortError') return;
+        }
+      }
+      if(navigator.clipboard && window.ClipboardItem && window.isSecureContext){
+        try{
+          await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+          toast('تم نسخ النتيجة كصورة. يمكنك لصقها ومشاركتها.');
+          return;
+        }catch(e){}
+      }
+      const url=URL.createObjectURL(blob);
+      const opened=window.open(url,'_blank','noopener,noreferrer');
+      if(!opened){
+        const a=document.createElement('a'); a.href=url; a.target='_blank'; a.rel='noopener noreferrer';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+      toast('تم تجهيز الصورة. اضغط مطولاً عليها لحفظها أو مشاركتها.');
+    }catch(e){
+      if(e && e.name==='AbortError') return;
+      toast('تعذر تجهيز صورة النتيجة. حاول مرة أخرى.', true);
+    }finally{
+      shareBtn.disabled=false; shareBtn.textContent=original;
+    }
+  }
+
+  function copyResultText(){
+    if(!topResult.textContent.trim() || topResult.textContent.trim()==='—'){
+      toast('اعرض النتيجة أولاً.', true); return;
+    }
+    const majors = [...majorsList.querySelectorAll('.major-name')].map(el => el.textContent.trim()).filter(Boolean);
+    const tip = (document.getElementById('studyTipText')?.textContent || '').trim();
+    const text = [
+      'نتيجتي في مساري 🎯',
+      '',
+      topResult.textContent.trim(),
+      typeLabel.textContent.trim(),
+      '',
+      'التخصصات المقترحة:',
+      ...majors.map((m,i) => (i+1) + '. ' + m),
+      '',
+      tip ? ('نصيحة للدراسة: ' + tip) : '',
+      '',
+      confidenceLabel.textContent.trim(),
+      '',
+      'مساري — اكتشف اهتماماتك واختر مستقبلك'
+    ].filter(Boolean).join('\n');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(() => toast('تم نسخ النتيجة كنص ✓')).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('تم نسخ النتيجة كنص ✓'); }
+    catch(e){ toast('تعذر النسخ. انسخ يدوياً.', true); }
+    ta.remove();
+  }
+
+  if(shareBtn) shareBtn.addEventListener('click', shareResult);
+  if(copyTextBtn) copyTextBtn.addEventListener('click', copyResultText);
+
+  // —— إرسال الاسم والرقم إلى Google Sheet ——
+  // الصق رابط الـ Web app بعد نشر السكربت من script.google.com
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBatvLEI9sJc2cZkC59D7o7MRDDeVH44EiyJWHjMVJUN56698Chw1KUzwljFnFr3a_TA/exec";
+
+  const PARTICIPANT_KEY = "masari_participant_v1";
+  let participant = null;
+
+  function normalizePhone(v){
+    return String(v || "").replace(/[^\d+]/g, "").trim();
+  }
+  function isValidPhone(v){
+    const digits = normalizePhone(v).replace(/\D/g, "");
+    return digits.length >= 8 && digits.length <= 15;
+  }
+  function readParticipant(){
+    try{
+      const raw = sessionStorage.getItem(PARTICIPANT_KEY);
+      if(!raw) return null;
+      const p = JSON.parse(raw);
+      if(p && p.name && p.phone) return p;
+    }catch(e){}
+    return null;
+  }
+  function writeParticipant(p){
+    participant = p;
+    try{ sessionStorage.setItem(PARTICIPANT_KEY, JSON.stringify(p)); }catch(e){}
+  }
+  function clearParticipant(){
+    participant = null;
+    try{ sessionStorage.removeItem(PARTICIPANT_KEY); }catch(e){}
+  }
+
+  async function sendRegistration(name, phone){
+    if(!GOOGLE_SCRIPT_URL || !GOOGLE_SCRIPT_URL.trim()){
+      console.warn("GOOGLE_SCRIPT_URL غير مضبوط — لن تُحفظ البيانات في الجدول.");
+      return { ok: false, reason: "not_configured" };
+    }
+    try{
+      await fetch(GOOGLE_SCRIPT_URL.trim(), {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          at: new Date().toISOString(),
+          source: "masari"
+        })
+      });
+      return { ok: true };
+    }catch(err){
+      console.error("فشل إرسال البيانات إلى Google Sheet:", err);
+      return { ok: false, reason: "network" };
+    }
+  }
+
+  function startQuiz(forceNew = false){
+    const modal=document.getElementById("majorModal");
+    if(modal){ modal.classList.remove("active"); modal.style.display="none"; modal.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
+    if(forceNew) clearSavedProgress();
+    const saved = forceNew ? null : readSavedProgress();
+    introScreen.classList.add("hidden");
+    quizContent.classList.remove("hidden");
+    resultBox.classList.remove("active");
+    questionsEl.classList.remove("hidden");
+    navActions.classList.remove("hidden");
+    titleBar.classList.remove("hidden");
+    buildQuiz(saved);
+    if(saved){ toast("تم استرجاع تقدمك السابق ✓"); }
+    else { toast("يلا نبلّش ✨"); }
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+
+  const gateForm = document.getElementById("gateForm");
+  const gateName = document.getElementById("gateName");
+  const gatePhone = document.getElementById("gatePhone");
+
+  // استرجاع بيانات الجلسة إن وُجدت (مثلاً بعد تحديث الصفحة)
+  (function restoreGateFields(){
+    const p = readParticipant();
+    if(p){
+      participant = p;
+      if(gateName) gateName.value = p.name || "";
+      if(gatePhone) gatePhone.value = p.phone || "";
+    }
+  })();
+
+  async function handleGateSubmit(e){
+    if(e) e.preventDefault();
+    const name = (gateName?.value || "").trim();
+    const phoneRaw = (gatePhone?.value || "").trim();
+    if(!name || name.length < 2){
+      toast("يرجى إدخال الاسم الكامل قبل بدء الاختبار.", true);
+      gateName?.focus();
+      return;
+    }
+    if(!isValidPhone(phoneRaw)){
+      toast("يرجى إدخال رقم هاتف صالح قبل بدء الاختبار.", true);
+      gatePhone?.focus();
+      return;
+    }
+    const phone = normalizePhone(phoneRaw);
+    const prev = readParticipant();
+    const sameAsBefore = prev && prev.name === name && prev.phone === phone;
+
+    startBtn.disabled = true;
+    const originalLabel = startBtn.textContent;
+    startBtn.textContent = "جارٍ التحقق…";
+
+    if(!sameAsBefore){
+      const sent = await sendRegistration(name, phone);
+      if(!sent.ok && sent.reason !== "not_configured"){
+        toast("تعذر حفظ بياناتك مؤقتاً. يمكنك المتابعة.", true);
+      }
+      writeParticipant({ name, phone, at: Date.now() });
+    } else {
+      writeParticipant(prev);
+    }
+
+    startBtn.disabled = false;
+    startBtn.textContent = originalLabel;
+    startQuiz(false);
+  }
+
+  if(gateForm){
+    gateForm.addEventListener("submit", handleGateSubmit);
+  } else if(startBtn){
+    startBtn.addEventListener("click", handleGateSubmit);
+  }
+
+  restartBtn.addEventListener("click", () => {
+    // عند البدء من جديد نطلب الاسم والرقم من جديد
+    clearSavedProgress();
+    clearParticipant();
+    if(gateName) gateName.value = "";
+    if(gatePhone) gatePhone.value = "";
+    introScreen.classList.remove("hidden");
+    quizContent.classList.add("hidden");
+    resultBox.classList.remove("active");
+    toast("أدخل اسمك ورقم هاتفك للبدء من جديد.");
+    window.scrollTo({top: 0, behavior: "smooth"});
+    setTimeout(() => gateName?.focus(), 300);
+  });
+
+  // Theme
+  function applyTheme(dark){
+    document.documentElement.classList.toggle('dark', dark);
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+    themeBtn.setAttribute('aria-label', dark ? 'الوضع النهاري' : 'الوضع الليلي');
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch(e){}
+  }
+  themeBtn.addEventListener('click', () => {
+    applyTheme(!document.documentElement.classList.contains('dark'));
+  });
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+      applyTheme(true);
+    }
+  } catch(e){}
+
+  hitCounter();
+
+  // استئناف الاختبار تلقائياً إن وُجد تقدم محفوظ + بيانات مشارك في نفس الجلسة
+  (function tryResumeQuiz(){
+    const saved = readSavedProgress();
+    const p = readParticipant();
+    if(saved && p){
+      participant = p;
+      startQuiz(false);
+    }
+  })();
+</script>
+</body>
+</html>
