@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>منصة حفلات تخرج</title>
+  <meta name="description" content="نظام ذكي لإدارة وتنظيم حفلات التخرج.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+    <symbol id="i-parties" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-bookings" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></symbol>
+    <symbol id="i-supervisors" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M16 11l2 2 4-4"/></symbol>
+    <symbol id="i-reports" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-6M2 20h20"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 6M22 20c0-3-2-5-4-5.5"/></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </svg>
+
+  <div id="boot" class="boot" role="status" aria-label="جارٍ التحميل"><span class="spinner"></span></div>
+
+  <main id="login-view" class="login" hidden>
+    <div class="login-card">
+      <section class="login-brand">
+        <span class="brand-mark"><svg class="icon"><use href="#i-cap"/></svg></span>
+        <h1>منصة حفلات تخرج</h1>
+        <p>نظام ذكي لإدارة وتنظيم حفلات التخرج.</p>
+      </section>
+      <form id="login-form" class="login-form" novalidate>
+        <h2>تسجيل الدخول</h2>
+        <div class="field">
+          <label for="username">اسم المستخدم</label>
+          <input id="username" dir="ltr" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        </div>
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <input id="password" type="password" dir="ltr" autocomplete="current-password" required>
+        </div>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button id="login-btn" class="btn btn-primary" type="submit">
+          <span id="login-spinner" class="spinner" hidden></span>
+          <span id="login-btn-text">تسجيل الدخول</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <div id="app-view" class="shell" hidden>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand"><svg class="icon"><use href="#i-cap"/></svg><span>منصة حفلات تخرج</span></div>
+      <nav id="nav" class="nav" aria-label="القائمة الرئيسية"></nav>
+    </aside>
+    <div id="scrim" class="scrim"></div>
+    <div class="main">
+      <header class="topbar">
+        <button id="menu-btn" class="btn btn-ghost menu-btn" aria-label="فتح القائمة"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <h2 id="page-title"></h2>
+        <div class="user"><span id="user-name" class="user-name"></span><span id="user-meta" class="user-meta"></span></div>
+        <button id="logout-btn" class="btn btn-ghost" aria-label="تسجيل الخروج"><svg class="icon"><use href="#i-logout"/></svg><span>تسجيل الخروج</span></button>
+      </header>
+      <div id="content" class="content"></div>
+    </div>
+  </div>
+
+  <template id="admin-tpl">
+    <section class="card">
+      <h3>التأسيس جاهز</h3>
+      <p>تم تجهيز التأسيس وتسجيل الدخول والصلاحيات. أقسام القائمة الجانبية غير مفعلة بعد وستُضاف في المراحل القادمة.</p>
+    </section>
+    <section class="card hall-space" aria-label="مساحة مخطط القاعة">
+      <div><svg class="icon icon-lg"><use href="#i-layout"/></svg><h3>مساحة مخطط القاعة</h3><p>مخصصة لعرض مخطط القاعة في مرحلة لاحقة.</p></div>
+    </section>
+  </template>
+  <template id="supervisor-tpl">
+    <section class="card">
+      <h3>لا توجد مهام حالياً</h3>
+      <p>ستظهر مهامك هنا في مرحلة لاحقة.</p>
+    </section>
+  </template>
+
+  <!-- مكتبة Supabase الرسمية (نسخة ثابتة) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
